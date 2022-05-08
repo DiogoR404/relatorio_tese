@@ -1,0 +1,309 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2017/10/04
+%
+\documentclass[runningheads]{llncs}
+%
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\graphicspath{ {./images/} }
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    linktocpage=true
+}
+\setcounter{tocdepth}{2} %show more in the toc
+
+\newcommand{\kw}[1]{\texttt{#1}}
+\renewcommand{\contentsname}{table of content}
+\usepackage{indentfirst}
+\usepackage[english]{babel}
+
+% If you use the hyperref package, please uncomment the following line
+% to display URLs in blue roman font according to Springer's eBook style:
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+
+%
+
+\title{Infra-estrutura de Testes para Implementações de Referência do Standard ECMAScript}
+\subtitle{}
+
+%
+\titlerunning{Live Metadata for Test262}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{Diogo Costa Reis\\ist187526\\
+\email{diogo.costa.reis@tecnico.ulisboa.pt}}
+%
+\authorrunning{Diogo Costa Reis}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{Instituto Superior Técnico\\
+Av. Rovisco Pais, 1\\
+1049-001 Lisboa\\
+Tel: +351 218 417 000\\
+\email{mail@tecnico.ulisboa.pt}}
+%
+
+
+\begin{document}
+
+% a solution to remove title and author from appearing in the table of contents: https://tex.stackexchange.com/a/318220
+{\def\addcontentsline#1#2#3{}\maketitle}
+
+%
+\begin{abstract}
+% TODO
+
+\keywords{ECMAScript \and Specification Language \and Reference Interpreters \and Test262}
+\end{abstract}
+
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+\label{sec:Introduction}
+
+\section{Goals}
+\label{sec:Goals}
+
+\section{Background}
+\label{sec:Background}
+This chapter provides an overview on the ECMAScript standard, the Test262 that are used to test the correct implementation of the ECMAScript standard, and finally an outline of the new metadata generated.
+
+\subsection{ECMAScript}
+\label{subsec:ECMAScript}
+% overview da linguagem JS
+
+% paragrafo - porque e' que javascript e' relevante (uma das linguagens mais usadas no momento)
+% Existem muitas implementacoes diferentes da linguagem: client-side (browsers), server-side (Node.js), embedded devices (Jerryscript) -> Estas implementacoes têm de estar de coincider no comportamento observavel -> é particularmente importante na Web -> senao temos sites que em ...
+JavaScript (JS) is a programming language mainly used in the development of client side web applications, also being one of the most popular programming languages. According to both GitHub and StakeOverflow statistics, JavaScript finished 2021 as \colorbox{orange}{second most active} languages on GitHub\footnote{Second most utilized language based GitHub pull requests - https://madnight.github.io/githut/} and the second most active on StackOverflow.\footnote{Tendencies based on the Tags used - https://insights.stackoverflow.com/trends}
+
+
+
+
+% overview do standard -> descrita num standard
+% Porque é muito importante que as várias implementacoes da linguagem coincidam -> o JavaScript está especificado num documento semi-formal que ...
+% Falar sobre o standard
+%   - o standard está como um interpretador de JavaScript em
+%     pseudo-codigo - descreve detalhadamente os passos que
+%    um interpretador de JS tem de executar ao avaliar qualquer
+%    statement da linguagem
+% Falar sobre o comité -  quem controla a evolucao do ECMAScript 
+ECMAScript standard is the official document in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version.
+%
+JavaScript is specified in the ECMAScript standard\cite{ECMAScriptStandard}, which is written in English, and subsequently implemented by various  compilers and interpreters. Some of the JavaScript compilers are the ~\cite{Hop} and the JSC~\cite{JSC} compilers.
+Most popular interpreters being nodejs~\cite{nodejs} and spidermonkey~\cite{spidermonkey}.
+%
+The standard defines the types, values, objects, properties, syntax, and semantics of JavaScript that must be the same in every JavaScript compiler and interpreter, while allowing JavaScript implementations to define additional types, values, object, properties, and functions.
+
+
+
+
+
+
+% Estrutura do standard
+The JavaScript language can be divided into three major components, those being expressions and commands, built-in libraries, and finally internal functions.
+%
+\begin{itemize}
+\item Expressions and commands describe the behavior of static constructions, detailing the semantics of the diverse expressions (e.g., assignment expressions, built-in operators, etc.), commands (e.g., loop commands, conditions command, etc.), and built-in types (Undefined, Null, Boolean, Number, String and Object).
+%
+\item The internal functions of the language are used to define the semantics for both expressions and commands, as well as the built-in libraries. Internal functions are not exposed beyond the internal context of the language. In other words, no JavaScript program uses internal functions directly.
+%
+\item Finally, built-in libraries encompass all the internal objects available when a JavaScript program is executed. Internal objects expose many functions implemented by the language itself, including functions to manipulate numbers, text, arrays, objects, amongst other things.
+\end{itemize}
+
+
+% MetaParagrafo tres tipos
+% Expressions and statements
+% Exemplo do standard  e explicacao (if)
+%
+\paragraph{Semantics of IF statement}
+Figure \ref{fig:If-Else Statement} shows a snippet of the ECMAScript standard description of the \texttt{IF} command. In order to evaluate \texttt{IF} commands with the shape:
+
+\begin{center}
+\texttt{if (Expression) Statement1 else Statement2}
+\end{center}
+
+\noindent the language begins by evaluating the \texttt{Expression} storing the result in the variable \texttt{exprRef} (step 1). The previous step will be used as Boolean, therefore, the result of the previous step will be converted to a Boolean using the internat functions \texttt{ToBoolean} and \texttt{GetValue}, and having the result stored in the variable \texttt{exprValue} (step 2).A different \texttt{Statement} will be followed depending on \texttt{exprValue}. If \texttt{exprValue} has the value \texttt{true} the variable \texttt{stmtCompletion} will have the evaluation of the first \texttt{Statement} (step 3). Otherwise, the variable \texttt{stmtCompletion} will store the result of evaluating the second \texttt{Statement} (step 4). Finally, a \texttt{Completion} will be returned, if the \texttt{stmtCompletion} has non empty value then it will be returned, however, when the value is empty it will be replaced with undefined (step 5).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/if_statement.png}
+    \caption{ECMAScript definition of an if-else statement}
+    \label{fig:If-Else Statement}
+\end{figure}
+
+% example of Array.pop
+% arrays são objetos como os outros
+% arrys tem propriedades especiais
+\paragraph{Example of Array.pop}
+Figure \ref{fig:Array_pop_example} shows a simplified version of before \texttt{(a)} and after \texttt{(b)} of an array performing the pop function.
+Before preforming \texttt{pop} \texttt{(a)}, the array has three  properties \texttt{length}, \texttt{0}, and \texttt{1}. Property \texttt{length} represents the size of the array that has value \texttt{2}. While the properties \texttt{0} and \texttt{1} store the first and second elements of the array respectively.
+After \texttt{pop} being preformed \texttt{(b)}, the last element is of the array is removed (highlighted in red at \texttt{(a)}). The \texttt{length} property highlighted in green is also updated since the size of the array changes to one.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/array_pop_example.png}
+    \caption{Example Array.pop}
+    \label{fig:Array_pop_example}
+\end{figure}
+
+% Built-ins (Array.pop)
+% printscreen do standard e explicacao
+\paragraph{Semantics of the Pop function}
+Figure \ref{fig:Array_pop} shows a snippet of the ECMAScript standard description of the pop function in the Array Built-in. To begin with, the array will be converted to and Object using the \texttt{ToObject} function, and stored in the \texttt{O} variable (step 1).
+Afterwards, the array length of the previously calculated variable will be calculated with the \texttt{LengthOfArrayLike} internal function, and storing the result in the \texttt{len} variable (step 2).
+At this point there are to ways to proceed depending on the value of \texttt{len}. If the value is zero, the Array is empty, then the property \texttt{length} of \texttt{O} is set to zero and \texttt{undefined} is returned (step 3).
+Otherwise, when \texttt{len} is different from zero, meaning that the Array is not empty, the Array's last element will be removed (described in Figure \ref{fig:Array_pop_example}) and returned (step 4).
+To begin with, the language will assert that \texttt{len} is positive (step 4.a).
+Afterwards, the \texttt{newLen} variable will store the value of \texttt{len} decremented by 1 (step 4.b).
+The variable \texttt{index} will store the variable calculated in the previous step represented as a String converted with the \texttt{toString} function (step 4.c).
+Then, stores the value of the \texttt{O} variable at the property corresponding to \texttt{index} in the \texttt{element} variable using the \texttt{Get} function (step 4.d).
+Subsequently, deletes the previously mentioned property of the \texttt{O} variable with the \texttt{DeletePropertyOrThrow} function (step 4.e).
+In addition, sets the \texttt{length} property of the \texttt{O} variable  to the \texttt{newLen} using the \texttt{Set} function (step 4.f).
+Finally, returning the value of the variable \texttt{element} (step 4.g).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/array_pop.png}
+    \caption{ECMAScript definition of Array.pop}
+    \label{fig:Array_pop}
+\end{figure}
+
+
+
+% Internal Functions (LenghtOfArrayLike)
+% printscreen do standard e explicacao
+\paragraph*{LengthOfArrayLike internal function}
+Figure \ref{fig:LengthOfArrayLike} shows a snippet of the ECMAScript standard description of the \texttt{LengthOfArrayLike} internal function, that evaluates the function:
+
+\begin{center}
+\texttt{LengthOfArrayLike (obj)}
+\end{center}
+
+\noindent The language starts by asserting that \texttt{obj} is an \texttt{Object} (step 1). Afterwards, getting the value of the property \texttt{length} from \texttt{obj} using the function \texttt{Get}. Converting the previously mentioned value to an Integer that represents the length with the \texttt{ToLength} function, and finally returning said Integer.  
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/length_array_like.png}
+    \caption{ECMAScript definition of the LengthOfArrayLike}
+    \label{fig:LengthOfArrayLike}
+\end{figure}
+
+
+
+
+\subsection{Test262}
+\label{subsec:Test262}
+
+
+% paragrafo - JS tem muitas particularidades que dificultam o desemvolvimento e testagem  -> É muito dificil desenvolver
+% novas implemenentacoes da linguagem
+% Existe uma bateria de testes que testa as implementacoes da
+% linguagem contra o standard
+% Esta bateria de testes é dificil de manter
+% Porque? - muitos testes, muitas features, em geral ha retrocompatibilidade mas ha um pequeno numero de casos onde a retrocompatibilidade nao se verifica -> os testes de ser modificados
+Implementing a JavaScript engine is particularly difficult since it involves dealing with the many corner cases \colorbox{orange}{explain meaning of corner case} that exist in the language. In addition, while testing JavaScript code, test batteries will also need to test all corner cases to guarantee that they are correctly implemented.
+
+%
+% Implementacoes parciais da linguagem
+% Na acadamia é normal desenvolverem-se implementacoes parciais da linguagem: não suportam a ultima versao, não suportam todos os objectos built-in, não suportam todas
+% Pergunta: Quais é que são os testes apropriados?
+% Normal: Respostas ad-hoc -> sem justificação rigorosa -> basicamente cada paper selecciona os testes que lhe da jeito
+
+
+%%
+%% Formato dos testes
+% frontmatter, code
+% exemplo
+
+Every test of test262 has 2 parts, those being the frontmatter with some metadata about the test and the second part is the code of the test. As in the example \ref{fig:Test262_example}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{images/test262_array_test.png}
+    \caption{Test262 es5id: 15.4.5-1}
+    \label{fig:Test262_example}
+\end{figure}
+
+
+%% metadados ja incluidos
+%% referir outra vez o exemplo
+
+
+%% metadados que achamos relevantes e nao estao incluidos
+%% ...
+
+
+
+
+
+- formato de um teste
+  - as várias secções e o seu próposito
+
+- metadados oficialmente incluídos nos testes
+  - que metadados é que os testes contém actualmente
+
+- quais são os metadados que nós achamos serem relevantes e que estão em falta
+
+
+\subsection{An Infrastructure for testing reference implementations of the ECMAScript standard}
+\label{subsec:An Infrastructure for testing reference implementations of the ECMAScript standard}
+
+%% Metodologia
+- metadados da Test262 -> estruturados
+
+- quais são os novos metadados incluídos
+
+- sumário das abordagens utilizadas para os calcular
+
+- shortcomings...
+
+\section{Related Work}
+\label{sec:Related Work}
+
+
+\section{Design and Methodology}
+\label{sec:Design and Methodology}
+
+\section{Evaluation and Planning}
+\label{sec:Evaluation and Planning}
+
+
+\section{Conclusion}
+\label{sec:Conclusion}
+
+
+%
+% the environments 'definition', 'lemma', 'proposition', 'corollary',
+% 'remark', and 'example' are defined in the LLNCS documentclass as well.
+%
+
+%
+% ---- Bibliography ----
+%
+% BibTeX users should specify bibliography style 'splncs04'.
+% References will then be sorted and formatted in the correct style.
+%
+% \bibliographystyle{splncs04}
+% \bibliography{mybibliography}
+%
+\bibliographystyle{splncs04}
+\bibliography{references}
+
+\end{document}
