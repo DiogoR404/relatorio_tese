@@ -104,8 +104,8 @@ JavaScript (JS) is a programming language mainly used in the development of clie
 %     pseudo-codigo - descreve detalhadamente os passos que
 %    um interpretador de JS tem de executar ao avaliar qualquer
 %    statement da linguagem
-% Falar sobre o comité -  quem controla a evolucao do ECMAScript 
-ECMAScript standard is the official document in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version. 
+% Falar sobre o comité -  quem controla a evolucao do ECMAScript
+ECMAScript standard is the official document in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version.
 %
 JavaScript is specified in the ECMAScript standard\cite{ECMAScriptStandard}, which is written in English, and subsequently implemented by various  compilers and interpreters. Some of the JavaScript compilers are the ~\cite{Hop} and the JSC~\cite{JSC} compilers.
 Most popular interpreters being nodejs~\cite{nodejs} and spidermonkey~\cite{spidermonkey}.
@@ -199,7 +199,7 @@ Figure \ref{fig:LengthOfArrayLike} shows a snippet of the ECMAScript standard de
 \texttt{LengthOfArrayLike (obj)}
 \end{center}
 
-\noindent The language starts by asserting that \texttt{obj} is an \texttt{Object} (step 1). Afterwards, getting the value of the property \texttt{length} from \texttt{obj} using the function \texttt{Get}. Converting the previously mentioned value to an Integer that represents the length with the \texttt{ToLength} function, and finally returning said Integer.  
+\noindent The language starts by asserting that \texttt{obj} is an \texttt{Object} (step 1). Afterwards, gets the value of the property \texttt{length} from \texttt{obj} using the function \texttt{Get}. Then, converts the previously mentioned value to an Integer that represents the length with the \texttt{ToLength} function, and finally returns said Integer (step 2).
 
 \begin{figure}[ht]
     \centering
