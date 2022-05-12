@@ -105,18 +105,18 @@ JavaScript (JS) is a programming language mainly used in the development of clie
 %    um interpretador de JS tem de executar ao avaliar qualquer
 %    statement da linguagem
 % Falar sobre o comité -  quem controla a evolucao do ECMAScript
-ECMAScript standard\cite{ECMAScriptStandard} is the official document in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version.
+ECMAScript standard\cite{ECMAScriptStandard} is the official document, written in the English language, in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version.
 %
-JavaScript is specified in the ECMAScript standard using the English language. Subsequently, the standard is implemented by various  compilers and interpreters. Some of the JavaScript compilers are the ~\cite{Hop} and the JSC~\cite{JSC} compilers. Most popular interpreters being nodejs~\cite{nodejs} and spidermonkey~\cite{spidermonkey}. These are only four implementations amongst many others, which come along with the many use cases that JavaScript has. JavaScript is used mostly used in the web context, both client-side within browsers and server-side \texttt{(Node.js)}, but also in embedded devices.
+The standard specifies the \texttt{JavaScript} language, to ensure it's multiple compilers and interpreters implementions are coherent. Some of the \texttt{JavaScript} compilers are the ~\cite{Hop} and the JSC~\cite{JSC} compilers, the most popular interpreters are nodejs~\cite{nodejs} and spidermonkey~\cite{spidermonkey}. These are only four implementations amongst many others, which come along with the many use cases that \texttt{JavaScript} has.
 %
-Since JavaScript is used in so many scenarios and across so many different contexts, there is a great need for the ECMAScript standard to define in grate detail to ensure consistency. Browsers, for example, need to run JavaScript implementations that coincide so that websites are correctly rendered. In order to achieve coherent implementations, the standard defines the types, values, objects, properties, syntax, and semantics of JavaScript that must be the same in every JavaScript compiler and interpreter, while allowing JavaScript implementations to define additional types, values, object, properties, and functions.
+\texttt{JavaScript} is used mostly used in the web context, both client-side within browsers and server-side, but also in embedded devices. Since \texttt{JavaScript} is used in so many scenarios and across so many different contexts, there is highly important that ECMAScript standard is defined in great detail to ensure consistency. Browsers, for example, need to run \texttt{JavaScript} implementations that coincide so that websites are correctly rendered. In order to achieve coherent implementations, the standard defines the types, values, objects, properties, syntax, and semantics of \texttt{JavaScript} that must be the same in every \texttt{JavaScript} compiler and interpreter, while allowing \texttt{JavaScript} implementations to define additional types, values, object, properties, and functions.
 
 
 
 
-% Good melhorar se houver tempo no final
+% Good, more detail if there is time
 % Estrutura do standard
-The JavaScript language can be divided into three major components, those being expressions and commands, built-in libraries, and finally internal functions.
+The \texttt{JavaScript} language can be divided into three major components, those being expressions and commands, built-in libraries, and finally internal functions.
 %
 \begin{itemize}
 \item Expressions and commands describe the behavior of static constructions, detailing the semantics of the diverse expressions (e.g., assignment expressions, built-in operators, etc.), commands (e.g., loop commands, conditions command, etc.), and built-in types (Undefined, Null, Boolean, Number, String and Object).
@@ -219,21 +219,25 @@ Figure \ref{fig:LengthOfArrayLike} shows a snippet of the ECMAScript standard de
 % linguagem contra o standard
 % Esta bateria de testes é dificil de manter
 % Porque? - muitos testes, muitas features, em geral ha retrocompatibilidade mas ha um pequeno numero de casos onde a retrocompatibilidade nao se verifica -> os testes de ser modificados
-Implementing a JavaScript engine is particularly difficult since it involves dealing with the many corner cases \colorbox{orange}{explain meaning of corner case} that exist in the language. In addition, while testing JavaScript code, test batteries will also need to test all corner cases to guarantee that they are correctly implemented.
-
+Implementing a \texttt{JavaScript} engine is particularly difficult since it involves dealing with the many corner cases that exist in the language. To test that corner cases are \colorbox{orange}{correctly dealt with there is \texttt{Test262}\cite{Test262}}, the ECMAScript standard test battery. Although, \texttt{Test262} is vital to the \texttt{JavaScript} engines, it is very hard to maintain due it's complexity (large quantity of tests and features).\texttt{Test262} complexity grows with changes to the standard since in most cases retrocompatibility is maintained except for a few select cases. 
 %
+% doesn't that imply wrongly that Test262 is comple???
+%
+
+
 % Implementacoes parciais da linguagem
 % Na acadamia é normal desenvolverem-se implementacoes parciais da linguagem: não suportam a ultima versao, não suportam todos os objectos built-in, não suportam todas
 % Pergunta: Quais é que são os testes apropriados?
 % Normal: Respostas ad-hoc -> sem justificação rigorosa -> basicamente cada paper selecciona os testes que lhe da jeito
+Due to ECMAScript standard being so extensive most implementations are only partial (namely implementations in academic context). Since the implementations are only partial, only tests for features that are implemented are relevant. Since selecting the relevant tests is not a trivial matter, each development team selects the appropiate tests. Each development selecting the tests raises the problem that there is not standard and precise way of picking the all the right tests.
+
 
 
 %%
 %% Formato dos testes
 % frontmatter, code
 % exemplo
-
-Every test of test262 has 2 parts, those being the frontmatter with some metadata about the test and the second part is the code of the test. As in the example \ref{fig:Test262_example}.
+Figure \ref{fig:Test262_example} shows a test from \texttt{Test262}. Every test of test262 has 3 parts: first is the copyright section represented with the comment \texttt{//} (lines 1 and 2), second is the \texttt{Frontmatter} section between \texttt{/*---} and \texttt{---*/} with some metadata about the test (lines 4 to 7), and finally is the \texttt{Body} section with the code of the test (lines 9 to 12). The copyright section has information about the owner and licence of the test. The \texttt{Frontmatter} section has the the test id (15.4.5-1) and a description of the test. Finally, the \texttt{Body}'s code tests the correct implementation of the standard.
 
 \begin{figure}[ht]
     \centering
@@ -243,37 +247,64 @@ Every test of test262 has 2 parts, those being the frontmatter with some metadat
 \end{figure}
 
 
+
 %% metadados ja incluidos
 %% referir outra vez o exemplo
+% - metadados oficialmente incluídos nos testes
+%   - que metadados é que os testes contém actualmente
+The \texttt{Frontmatter} has keywords to hold metadata of the test. These keywords are associated with some type of metadata about the test. Bellow is the list of possible keywords and its meaning:
 
+\begin{itemize}
+\item \texttt{description} - contains a short description about what will be tested;
+%
+\item \texttt{esid} - contains the hash identifier of the ECMAScript portion associated with the feature that will be tested (the identifier references the most recent version of ECMAScript when the test is created);
+%
+\item \texttt{info} - contains a deeper explanation of the test behavior, frequently includes a direct citation of the standard;
+%
+\item \texttt{negative} - indicates that the test throws an error; associated to the keyword will be the type of error the test is supposed to throw (e.g. \texttt{TypeError}, \texttt{ReferenceError}) as well as the phase in which the error is expected to be thrown (e.g. \texttt{parse} vs \texttt{resolution} vs \texttt{runtime});
+%
+\item \texttt{includes} - contains the list of harness files that should be included in the execution of the tests;
+%
+\item \texttt{author} - contains the identification of the author of the test;
+%
+\item \texttt{flags} - contains a list of booleans for each property. The properties being: 1 \texttt{onlyStrict}, the test is only executed in strict mode; 2 noStrict, the test will only be executed in mode "sloppy"; 3 \texttt{module}, the test must be integrated as a \texttt{JavaScript} module; 4 \texttt{raw}, executes the test without any modification, which implies running as \texttt{noStrict}; 5 \texttt{async}, only for asyncronus tests; 6 \texttt{generated}, flag that identifies files created by a test; 7 \texttt{CanBlockIsFalse} and 8 \texttt{CanBlockIsTrue}, indicatethe value of the property \texttt{CanBlock} ; 9 \colorbox{orange}{\texttt{non-deterministic}}, idicates that the semantics used on the test are intentionally under-specified and therefore the test passing or failing should not be regarded as an indication of reliability or conformance;
+%
+% non-deterministic nao esta na tese do miguel trigo
+%
+%
+\item \texttt{features} - containds a list of features that are used in the test;
+%
+\item \texttt{es5id} and \texttt{es6id} - indicates that the feature being tested belongs to ECMAScript 5 and 6 respectively and contains the hash identifier of the section of the standard it bellongs to; these keywords have been deprecated and substituted by esid;
+\end{itemize}
 
 %% metadados que achamos relevantes e nao estao incluidos
 %% ...
+The example in \ref{fig:Test262_example} has 2 keywords, description and the deprecated es5id. Besides the obvious upgrade from \texttt{es5id} to \texttt{esid} it would be usefull to have \texttt{includes} with the harness files needed to execute the test. The harness information is very usefull since it makes easly available what part of the harness is needed to run that test, opening the door for loading only part of the harness instead of the whole harness which is the current approach.
 
 
 
+% - quais são os metadados que nós achamos serem relevantes e que estão em falta
+In order to have a more complete \texttt{Frontmatter} we suggest adding the following information:
 
+\begin{itemize}
+    \item \texttt{static construct} - list of static constructions used in the test
+    \item \texttt{version} - the ECMAScript version of the standard after which the test belongs to
+    \item \texttt{built-ins} - list of all the built-ins used in the test
+\end{itemize}
 
-- formato de um teste
-  - as várias secções e o seu próposito
-
-- metadados oficialmente incluídos nos testes
-  - que metadados é que os testes contém actualmente
-
-- quais são os metadados que nós achamos serem relevantes e que estão em falta
-
+This metadata provides helpfull information to solve the problem mentioned before of selecting the relevant tests for partial implementations. 
 
 \subsection{An Infrastructure for testing reference implementations of the ECMAScript standard}
 \label{subsec:An Infrastructure for testing reference implementations of the ECMAScript standard}
 
 %% Metodologia
-- metadados da Test262 -> estruturados
+% - metadados da Test262 -> estruturados
 
-- quais são os novos metadados incluídos
+% - quais são os novos metadados incluídos
 
-- sumário das abordagens utilizadas para os calcular
+% - sumário das abordagens utilizadas para os calcular
 
-- shortcomings...
+% - shortcomings...
 
 \section{Related Work}
 \label{sec:Related Work}
