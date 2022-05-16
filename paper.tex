@@ -94,7 +94,7 @@ JavaScript (JS) is a programming language mainly used in the development of clie
 
 
 
-
+% Boa!
 % Existem muitas implementacoes diferentes da linguagem: client-side (browsers), server-side (Node.js), embedded devices (Jerryscript) -> Estas implementacoes têm de estar de acordo no comportamento observavel -> é particularmente importante na Web -> senao temos sites que em ...
 % -----------------------
 % overview do standard -> descrita num standard
@@ -107,9 +107,9 @@ JavaScript (JS) is a programming language mainly used in the development of clie
 % Falar sobre o comité -  quem controla a evolucao do ECMAScript
 ECMAScript standard\cite{ECMAScriptStandard} is the official document, written in the English language, in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version.
 %
-The standard specifies the \texttt{JavaScript} language, to ensure it's multiple compilers and interpreters implementions are coherent. Some of the \texttt{JavaScript} compilers are the ~\cite{Hop} and the JSC~\cite{JSC} compilers, the most popular interpreters are nodejs~\cite{nodejs} and spidermonkey~\cite{spidermonkey}. These are only four implementations amongst many others, which come along with the many use cases that \texttt{JavaScript} has.
+The standard specifies the \texttt{JavaScript} language, to ensure its multiple compilers and interpreters implementations are coherent. Some of the \texttt{JavaScript} compilers are the Hop~\cite{Hop} and the JSC~\cite{JSC} compilers, the most popular interpreters are Node.js~\cite{Node.js} and SpiderMonkey~\cite{SpiderMonkey}. These are only four implementations among many others, which come along with the many use cases that \texttt{JavaScript} has.
 %
-\texttt{JavaScript} is used mostly used in the web context, both client-side within browsers and server-side, but also in embedded devices. Since \texttt{JavaScript} is used in so many scenarios and across so many different contexts, there is highly important that ECMAScript standard is defined in great detail to ensure consistency. Browsers, for example, need to run \texttt{JavaScript} implementations that coincide so that websites are correctly rendered. In order to achieve coherent implementations, the standard defines the types, values, objects, properties, syntax, and semantics of \texttt{JavaScript} that must be the same in every \texttt{JavaScript} compiler and interpreter, while allowing \texttt{JavaScript} implementations to define additional types, values, object, properties, and functions.
+\texttt{JavaScript} is mostly used in the web context, both client-side within browsers and server-side, but also in embedded devices. Since \texttt{JavaScript} is used in so many scenarios and across so many different contexts, it is highly important that ECMAScript standard is defined in great detail to ensure consistency. Browsers, for example, need to run \texttt{JavaScript} implementations that coincide so that websites are correctly rendered and exhibit the same behavior. In order to achieve coherent implementations, the standard defines the types, values, objects, properties, syntax, and semantics of \texttt{JavaScript} that must be the same in every \texttt{JavaScript} compiler and interpreter, while allowing \texttt{JavaScript} implementations to define additional types, values, object, properties, and functions.
 
 
 
@@ -139,7 +139,7 @@ Figure \ref{fig:If-Else Statement} shows a snippet of the ECMAScript standard de
 \texttt{if (Expression) Statement1 else Statement2}
 \end{center}
 
-\noindent the language begins by evaluating the \texttt{Expression} storing the result in the variable \texttt{exprRef} (step 1). The previous step will be used as Boolean, therefore, the result of the previous step will be converted to a Boolean using the internat functions \texttt{ToBoolean} and \texttt{GetValue}, and having the result stored in the variable \texttt{exprValue} (step 2).A different \texttt{Statement} will be followed depending on \texttt{exprValue}. If \texttt{exprValue} has the value \texttt{true} the variable \texttt{stmtCompletion} will have the evaluation of the first \texttt{Statement} (step 3). Otherwise, the variable \texttt{stmtCompletion} will store the result of evaluating the second \texttt{Statement} (step 4). Finally, a \texttt{Completion} will be returned, if the \texttt{stmtCompletion} has non empty value then it will be returned, however, when the value is empty it will be replaced with undefined (step 5).
+\noindent the language begins by evaluating the \texttt{Expression} storing the result in the variable \texttt{exprRef} (step 1). The previous step will be used as Boolean, therefore, the result of the previous step will be converted to a Boolean using the internal functions \texttt{ToBoolean} and \texttt{GetValue}, and having the result stored in the variable \texttt{exprValue} (step 2).A different \texttt{Statement} will be followed depending on \texttt{exprValue}. If \texttt{exprValue} has the value \texttt{true} the variable \texttt{stmtCompletion} will have the evaluation of the first \texttt{Statement} (step 3). Otherwise, the variable \texttt{stmtCompletion} will store the result of evaluating the second \texttt{Statement} (step 4). Finally, a \texttt{Completion} will be returned, if the \texttt{stmtCompletion} has non empty value then it will be returned, however, when the value is empty it will be replaced with undefined (step 5).
 
 \begin{figure}[ht]
     \centering
@@ -157,8 +157,8 @@ Figure \ref{fig:If-Else Statement} shows a snippet of the ECMAScript standard de
 The Array built-in is an object as any other in JavaScript. The main difference is in its properties. Array Objects have a property \texttt{length} that contains the size of the array, as well as a property for each element of the array (from zero to \texttt{length} minus 1).
 
 Figure \ref{fig:Array_pop_example} shows a simplified version of an array performing the pop function, where \texttt{(a)} and \texttt{(b)} are the before and after respectively.
-Before preforming \texttt{pop} \texttt{(a)}, the array has three  properties \texttt{length}, \texttt{0}, and \texttt{1}. Property \texttt{length} represents the size of the array that has value \texttt{2}. While the properties \texttt{0} and \texttt{1} store the first (\texttt{banana}) and second (\texttt{kiwi}) elements of the array respectively.
-After \texttt{pop} being preformed \texttt{(b)}, the last element is of the array is removed (highlighted in red at \texttt{(a)}). The \texttt{length} property highlighted in green is also updated since the size of the array changes to one.
+Before preforming \texttt{pop} \texttt{(a)}, the array has three  properties \texttt{length}, \texttt{0}, and \texttt{1}. Property \texttt{length} represents the size of the array that has value \texttt{2}, while the properties \texttt{0} and \texttt{1} store the first (\texttt{banana}) and second (\texttt{kiwi}) elements of the array respectively.
+After \texttt{pop} is preformed \texttt{(b)}, the last element is of the array is removed (highlighted in red at \texttt{(a)}) and the \texttt{length} property (highlighted in green) is decremented by one since the size of the array changes to one.
 
 % TODO change length with quotation marks
 \begin{figure}[ht]
@@ -219,29 +219,30 @@ Figure \ref{fig:LengthOfArrayLike} shows a snippet of the ECMAScript standard de
 % linguagem contra o standard
 % Esta bateria de testes é dificil de manter
 % Porque? - muitos testes, muitas features, em geral ha retrocompatibilidade mas ha um pequeno numero de casos onde a retrocompatibilidade nao se verifica -> os testes de ser modificados
-Implementing a \texttt{JavaScript} engine is particularly difficult since it involves dealing with the many corner cases that exist in the language. To test that corner cases are \colorbox{orange}{correctly dealt with there is \texttt{Test262}\cite{Test262}}, the ECMAScript standard test battery. Although, \texttt{Test262} is vital to the \texttt{JavaScript} engines, it is very hard to maintain due it's complexity (large quantity of tests and features).\texttt{Test262} complexity grows with changes to the standard since in most cases retrocompatibility is maintained except for a few select cases. 
-%
-% doesn't that imply wrongly that Test262 is comple???
+Implementing a \texttt{JavaScript} engine is particularly difficult since it involves dealing with the many corner cases that exist in the language. To test that corner cases are correctly dealt with there is \texttt{Test262}\cite{Test262}, the ECMAScript standard test battery. Although, \texttt{Test262} is vital to the \texttt{JavaScript} engines, it is very hard to maintain due it's complexity, the total number of tests is around 40000 divided into \colorbox{orange}{87} subfolders, each correspond to roughly one section of the standard. \texttt{Test262} complexity grows with changes to the standard since in most cases backward compatible is maintained except for a few select cases. 
+% 87 subfolders on built-ins + language
+% 105 subfolders if add intl402 (which also has files that were ignore)
 %
 
 
-% Implementacoes parciais da linguagem
+
+% Implementacoes parciais da linguagem 
 % Na acadamia é normal desenvolverem-se implementacoes parciais da linguagem: não suportam a ultima versao, não suportam todos os objectos built-in, não suportam todas
 % Pergunta: Quais é que são os testes apropriados?
 % Normal: Respostas ad-hoc -> sem justificação rigorosa -> basicamente cada paper selecciona os testes que lhe da jeito
-Due to ECMAScript standard being so extensive most implementations are only partial (namely implementations in academic context). Since the implementations are only partial, only tests for features that are implemented are relevant. Since selecting the relevant tests is not a trivial matter, each development team selects the appropiate tests. Each development selecting the tests raises the problem that there is not standard and precise way of picking the all the right tests.
+Due to the ECMAScript standard being so extensive most implementations are only partial, especially implementations and analysis developed in academic contexts. In order to test partial implementations, one must be able to obtain the applicable set of tests from all the tests contained in Test262. Selecting the applicable tests is not a trivial matter because there are too many tests and too many features. The current methodology is that each development team manually selects the tests that are applicable to their corresponding implementation. This raises the problem that there is not standard and precise way of picking the all the right tests.
+% TODO final deste paragrafo
+% How can one be sure to have all the correct applicable tests among 40K tests?  
 
-
-
-%%
+% gosto
 %% Formato dos testes
 % frontmatter, code
 % exemplo
-Figure \ref{fig:Test262_example} shows a test from \texttt{Test262}. Every test of test262 has 3 parts: first is the copyright section represented with the comment \texttt{//} (lines 1 and 2), second is the \texttt{Frontmatter} section between \texttt{/*---} and \texttt{---*/} with some metadata about the test (lines 4 to 7), and finally is the \texttt{Body} section with the code of the test (lines 9 to 12). The copyright section has information about the owner and licence of the test. The \texttt{Frontmatter} section has the the test id (15.4.5-1) and a description of the test. Finally, the \texttt{Body}'s code tests the correct implementation of the standard.
+Figure \ref{fig:Test262_example} shows a test from \texttt{Test262}. Every test of \texttt{Test262} has 3 parts: first is the copyright section represented with the comment \texttt{//} (lines 1 and 2), second is the \texttt{Frontmatter} section between \texttt{/*---} and \texttt{---*/} with some metadata about the test (lines 4 to 7), and finally is the \texttt{Body} section with the code of the test (lines 9 to 12). The copyright section has information about the owner and license of the test. The \texttt{Frontmatter} section has the test id (15.4.5-1) and a description of the test. Finally, the \texttt{Body}'s code tests the correct implementation of the standard.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1.2\textwidth]{images/test262_array_test.png}
+    \includegraphics[width=1.0\textwidth]{images/test262_array_test.png}
     \caption{Test262 es5id: 15.4.5-1}
     \label{fig:Test262_example}
 \end{figure}
@@ -252,7 +253,7 @@ Figure \ref{fig:Test262_example} shows a test from \texttt{Test262}. Every test 
 %% referir outra vez o exemplo
 % - metadados oficialmente incluídos nos testes
 %   - que metadados é que os testes contém actualmente
-The \texttt{Frontmatter} has keywords to hold metadata of the test. These keywords are associated with some type of metadata about the test. Bellow is the list of possible keywords and its meaning:
+The \texttt{Frontmatter} has keywords to hold metadata of the test. These keywords are associated with specific elements of metadata concerning the test. Bellow is the list of possible keywords and their meaning:
 
 \begin{itemize}
 \item \texttt{description} - contains a short description about what will be tested;
@@ -261,29 +262,42 @@ The \texttt{Frontmatter} has keywords to hold metadata of the test. These keywor
 %
 \item \texttt{info} - contains a deeper explanation of the test behavior, frequently includes a direct citation of the standard;
 %
-\item \texttt{negative} - indicates that the test throws an error; associated to the keyword will be the type of error the test is supposed to throw (e.g. \texttt{TypeError}, \texttt{ReferenceError}) as well as the phase in which the error is expected to be thrown (e.g. \texttt{parse} vs \texttt{resolution} vs \texttt{runtime});
+\item \texttt{negative} - indicates that the test throws an error; associated to the keyword will be the type of error the test is supposed to be thrown (e.g. \texttt{TypeError}, \texttt{ReferenceError}) as well as the phase in which the error is expected to be thrown (e.g. \texttt{parse} vs \texttt{resolution} vs \texttt{runtime});
 %
-\item \texttt{includes} - contains the list of harness files that should be included in the execution of the tests;
+\item \texttt{includes} - contains the list of \texttt{harness} files that should be included in the execution of the tests (\texttt{Test262} makes use of a large number of auxiliary function defined in a dedicated library referred to as the \texttt{Test262} \texttt{harness} described later in this section);
 %
 \item \texttt{author} - contains the identification of the author of the test;
 %
-\item \texttt{flags} - contains a list of booleans for each property. The properties being: 1 \texttt{onlyStrict}, the test is only executed in strict mode; 2 noStrict, the test will only be executed in mode "sloppy"; 3 \texttt{module}, the test must be integrated as a \texttt{JavaScript} module; 4 \texttt{raw}, executes the test without any modification, which implies running as \texttt{noStrict}; 5 \texttt{async}, only for asyncronus tests; 6 \texttt{generated}, flag that identifies files created by a test; 7 \texttt{CanBlockIsFalse} and 8 \texttt{CanBlockIsTrue}, indicatethe value of the property \texttt{CanBlock} ; 9 \colorbox{orange}{\texttt{non-deterministic}}, idicates that the semantics used on the test are intentionally under-specified and therefore the test passing or failing should not be regarded as an indication of reliability or conformance;
+\item \texttt{flags} - contains a list of booleans for each test property, the properties being: (1) \texttt{onlyStrict}, the test is only executed in strict mode; (2) noStrict, the test will only be executed in mode \emph{sloppy}; (3) \texttt{module}, the test must be integrated as a \texttt{JavaScript} module; (4) \texttt{raw}, executes the test without any modification, which implies running as \texttt{noStrict}; (5) \texttt{async}, the test is contains asynchronous functions; (6) \texttt{generated}, the test generates the files specified by the property; (7) \texttt{CanBlockIsFalse} and (8) \texttt{CanBlockIsTrue}, the test will run if the property \texttt{CanBlock} of the \texttt{Agent Record} executing it is false and true respectively; (9) \texttt{non-deterministic}, indicates that the semantics used in the test are intentionally under-specified and therefore the test passing or failing should not be regarded as an indication of reliability or conformance;
+% TODO clarificar se e' necessario citar o que e' 'Agent Record' uma vez que nao vou explicar
 %
-% non-deterministic nao esta na tese do miguel trigo
 %
+\item \texttt{features} - contains a list of features that are used in the test;
 %
-\item \texttt{features} - containds a list of features that are used in the test;
-%
-\item \texttt{es5id} and \texttt{es6id} - indicates that the feature being tested belongs to ECMAScript 5 and 6 respectively and contains the hash identifier of the section of the standard it bellongs to; these keywords have been deprecated and substituted by esid;
+\item \texttt{es5id} and \texttt{es6id} - indicates that the feature being tested belongs to ECMAScript 5 and 6 respectively and contains the hash identifier of the section of the standard it belongs to; these keywords have been deprecated and substituted by esid.
 \end{itemize}
+
+% Varias observacoes: 
+%   - A metada esta muitas vezes INCOMPLETA e algumas vezes incorrecta 
+
+%  - é preciso calcular a metadata certa
+
+
+% As Example 5 illustrates, it is often the case that the metadata of a test is incomplete. Some tests also have the wrong metatada. As part of this thesis, we plan to process all the tests to check and correct their corresponding metadata.  
+%TODO
+
+
+
+
 
 %% metadados que achamos relevantes e nao estao incluidos
 %% ...
-The example in \ref{fig:Test262_example} has 2 keywords, description and the deprecated es5id. Besides the obvious upgrade from \texttt{es5id} to \texttt{esid} it would be usefull to have \texttt{includes} with the harness files needed to execute the test. The harness information is very usefull since it makes easly available what part of the harness is needed to run that test, opening the door for loading only part of the harness instead of the whole harness which is the current approach.
+The example in Figure \ref{fig:Test262_example} has 2 keywords, description and the deprecated es5id. Besides the obvious upgrade from \texttt{es5id} to \texttt{esid} it would be useful to have \texttt{includes} with the \texttt{harness} files needed to execute the test. The \texttt{harness} information is very useful since it makes it easy to identify the part of the \texttt{harness} needed to run that test, opening the door for loading only part of the \texttt{harness} instead of the whole \texttt{harness} which is the current approach.
 
 
 
 % - quais são os metadados que nós achamos serem relevantes e que estão em falta
+\paragraph{New Metadata}
 In order to have a more complete \texttt{Frontmatter} we suggest adding the following information:
 
 \begin{itemize}
@@ -292,11 +306,10 @@ In order to have a more complete \texttt{Frontmatter} we suggest adding the foll
     \item \texttt{built-ins} - list of all the built-ins used in the test
 \end{itemize}
 
-This metadata provides helpfull information to solve the problem mentioned before of selecting the relevant tests for partial implementations. 
+This metadata provides helpful information to solve the problem mentioned before of selecting the relevant tests for partial implementations. 
 
 \subsection{An Infrastructure for testing reference implementations of the ECMAScript standard}
 \label{subsec:An Infrastructure for testing reference implementations of the ECMAScript standard}
-
 %% Metodologia
 % - metadados da Test262 -> estruturados
 
@@ -305,6 +318,36 @@ This metadata provides helpfull information to solve the problem mentioned befor
 % - sumário das abordagens utilizadas para os calcular
 
 % - shortcomings...
+% ----------------------------------------------------
+% This thesis continues the thesis of Miguel Trigo entitled ..., in which the author processed all Test262 tests, checked their metadata and computed 
+% Resumo da tese do Miguel 
+
+% - construir uma base de dados com a metadata dos varios testes em formato JSON 
+
+% Exemplo 
+
+
+% - Corrigir a metadata dos testes incorrectos e calcular metadata adicional 
+
+
+% - Metadata adicional calculada parra cada teste:
+
+% - 
+
+% - 
+
+% -
+
+% Para cada um dos tipos de metadata 
+% um paragrafo a explicar sucintamente como é que a metada foi calculada 
+
+% - static 
+
+
+% - version 
+
+
+% - built-ins
 
 \section{Related Work}
 \label{sec:Related Work}
@@ -312,10 +355,33 @@ This metadata provides helpfull information to solve the problem mentioned befor
 
 \section{Design and Methodology}
 \label{sec:Design and Methodology}
+%  grandes objectivos 
+
+% - processamento completo da metadata oficial 
+% -> o processamento do miguel esta incompleto -> nao incluir informacao informacao sobre -> ... 
+% [pode criticar como entender]
+
+% - calculo mais preciso da nova metadata proposta 
+
+% - o calculo da versao pode ser melhorado de varias maneiras
+
+% - Precisao 
+
+% - usar mais engines
+
+% - Eficiencia 
+
+% - paralelizar os engines 
+
+
+% - Sistema de visualisacao da metadata 
+
+% printscreens do site 
+
 
 \section{Evaluation and Planning}
 \label{sec:Evaluation and Planning}
-
+% TODO GANT Diagram
 
 \section{Conclusion}
 \label{sec:Conclusion}
