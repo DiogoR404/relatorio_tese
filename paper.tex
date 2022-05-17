@@ -398,35 +398,61 @@ The mixed approach is calculated using the dynamic and static approaches. The mi
     \label{fig:waterfall_model}
 \end{figure}
 
+
+
 \section{Related Work}
 \label{sec:Related Work}
 
 
+
 \section{Design and Methodology}
 \label{sec:Design and Methodology}
+
+
+
 %  grandes objectivos 
+This thesis is a continuation of Miguel Tringo's master thesis, aiming to complete the calculation of the \texttt{Frontmatter} metadata especially the \colorbox{orange}{metadata about the \texttt{harness}}, also aims to improve the generated metadata. Another aim of this thesis is to create a website for visualizing the metadata generated. \colorbox{orange}{Finally,} we aim to build a platform that allows users to submit the markdown generated from executing the \texttt{Test262} and compare different runs.
+% QUESTION campo features? (restantes talvez possam ser ignorados author, negative, flags, info and description)
+% QUESTION incluir?
+
+
 
 % - processamento completo da metadata oficial 
 % -> o processamento do miguel esta incompleto -> nao incluir informacao informacao sobre -> ... 
 % [pode criticar como entender]
+Miguel Trigo's thesis metadata is incomplete in various ways, tests with unknown \texttt{version} around 9000, tests without \texttt{built-ins} around 17000, and tests without \texttt{syntactic\_construct} around 13000 \colorbox{orange}{tests without esid around 600}.
+% QUESTION sao tests da versao seginte de ECMA que ainda nao tem seccao na versao actual?
+%
+The metadata from the thesis could be improved in way the data is arranged, for example, the subfolders of the path to the test are spread into the JSON Object of the test. The subfolders information being put into an array of ordered subfolders would increase the readability.
 
-% - calculo mais preciso da nova metadata proposta 
 
+
+% - calculo mais preciso da nova metadata proposta
 % - o calculo da versao pode ser melhorado de varias maneiras
-
+This thesis plans to improve the \texttt{version} metadata generation in two dimensions precision and efficiency.
 % - Precisao 
-
 % - usar mais engines
-
+For the precision, with more \texttt{JavaScript} engines being used, there would be more certainty when determining the version.
 % - Eficiencia 
-
 % - paralelizar os engines 
+As for the efficiency, it would be possible to parallelize the waterfall model of the dynamic approach running multiple tests at the same time. It is also possible to use \texttt{git diff} to identify the tests that were added or changed since the last time the dynamic approach was executed, \colorbox{orange}{ only needing to execute} the dynamic approach on the differences.
+% QUESTION e' problema se fizerem update noutro lado que afeta o teste indiretamente?
+
 
 
 % - Sistema de visualisacao da metadata 
+The website for visualizing the metadata aims to make access to the metadata and filtering it easily accessible. The website is planned to allow the search 
+
+
 
 % printscreens do site 
-
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{images/website.png}
+    \caption{\colorbox{orange}{Website} for searching the metadata in construction}
+    % QUESTION letra maiuscula na caption
+    \label{fig:website}
+\end{figure}
 
 \section{Evaluation and Planning}
 \label{sec:Evaluation and Planning}
