@@ -128,7 +128,8 @@ The \texttt{JavaScript} language can be divided into three major components, tho
 
 
 % MetaParagrafo tres tipos
-The remaining subsection provides a description of the three types of artifact described in the standard.
+\colorbox{orange}{The remaining} subsection provides a description of the three types of artifact described in the standard.
+% QUESTION ainda nao foi lido pelo prof
 
 % Expressions and statements
 % Exemplo do standard  e explicacao (if)
@@ -219,10 +220,10 @@ Figure \ref{fig:LengthOfArrayLike} shows a snippet of the ECMAScript standard de
 % linguagem contra o standard
 % Esta bateria de testes é dificil de manter
 % Porque? - muitos testes, muitas features, em geral ha retrocompatibilidade mas ha um pequeno numero de casos onde a retrocompatibilidade nao se verifica -> os testes de ser modificados
-Implementing a \texttt{JavaScript} engine is particularly difficult since it involves dealing with the many corner cases that exist in the language. To test that corner cases are correctly dealt with there is \texttt{Test262}\cite{Test262}, the ECMAScript standard test battery. Although, \texttt{Test262} is vital to the \texttt{JavaScript} engines, it is very hard to maintain due it's complexity, the total number of tests is around 40000 divided into \colorbox{orange}{87} subfolders, each correspond to roughly one section of the standard. \texttt{Test262} complexity grows with changes to the standard since in most cases backward compatible is maintained except for a few select cases. 
+Implementing a \texttt{JavaScript} engine is particularly difficult since it involves dealing with the many corner cases that exist in the language. To test that corner cases are correctly dealt with there is \texttt{Test262}\cite{Test262}, the ECMAScript standard test battery. Although, \texttt{Test262} is vital to the \texttt{JavaScript} engines, it is very hard to maintain due it's complexity, the total number of tests is around \colorbox{orange}{39837} divided into \colorbox{orange}{87} subfolders, each correspond to roughly one section of the standard. \texttt{Test262} complexity grows with changes to the standard since in most cases backward compatible is maintained except for a few select cases. 
 % 87 subfolders on built-ins + language
-% 105 subfolders if add intl402 (which also has files that were ignore)
-%
+% QUESTION round number? (40000)
+% QUESTION 105 subfolders if add intl402 (which also has files that were ignore)
 
 
 
@@ -230,15 +231,14 @@ Implementing a \texttt{JavaScript} engine is particularly difficult since it inv
 % Na acadamia é normal desenvolverem-se implementacoes parciais da linguagem: não suportam a ultima versao, não suportam todos os objectos built-in, não suportam todas
 % Pergunta: Quais é que são os testes apropriados?
 % Normal: Respostas ad-hoc -> sem justificação rigorosa -> basicamente cada paper selecciona os testes que lhe da jeito
-Due to the ECMAScript standard being so extensive most implementations are only partial, especially implementations and analysis developed in academic contexts. In order to test partial implementations, one must be able to obtain the applicable set of tests from all the tests contained in Test262. Selecting the applicable tests is not a trivial matter because there are too many tests and too many features. The current methodology is that each development team manually selects the tests that are applicable to their corresponding implementation. This raises the problem that there is not standard and precise way of picking the all the right tests.
-% TODO final deste paragrafo
-% How can one be sure to have all the correct applicable tests among 40K tests?  
+Due to the ECMAScript standard being so extensive most implementations are only partial, especially implementations and analysis developed in academic contexts. In order to test partial implementations, one must be able to obtain the applicable set of tests from all the tests contained in Test262. Selecting the applicable tests is not a trivial matter because there are too many tests and too many features. The current methodology is that each development team manually selects the tests that are applicable to their corresponding implementation. This raises the problem that there is not standard and precise way of picking the all the right tests from the almost 40000 tests in \texttt{Test262}, making the possibility of human error when selecting the applicable tests likely.
+
 
 % gosto
 %% Formato dos testes
 % frontmatter, code
 % exemplo
-Figure \ref{fig:Test262_example} shows a test from \texttt{Test262}. Every test of \texttt{Test262} has 3 parts: first is the copyright section represented with the comment \texttt{//} (lines 1 and 2), second is the \texttt{Frontmatter} section between \texttt{/*---} and \texttt{---*/} with some metadata about the test (lines 4 to 7), and finally is the \texttt{Body} section with the code of the test (lines 9 to 12). The copyright section has information about the owner and license of the test. The \texttt{Frontmatter} section has the test id (15.4.5-1) and a description of the test. Finally, the \texttt{Body}'s code tests the correct implementation of the standard.
+Figure \ref{fig:Test262_example} shows a test from \texttt{Test262}. Every test of \texttt{Test262} has 3 parts: first is the copyright section represented with the comment \texttt{//} (lines 1 and 2), second is the \texttt{Frontmatter} section between \texttt{/*---} and \texttt{---*/} with some metadata about the test (lines 4 to 7), and finally is the \texttt{Body} section with the code of the test (lines 9 to 13). The copyright section has information about the owner and license of the test. The \texttt{Frontmatter} section has the test id (15.4.5-1) and a description of the test. Finally, the \texttt{Body}'s code tests the correct implementation of the standard.
 
 \begin{figure}[ht]
     \centering
@@ -268,8 +268,8 @@ The \texttt{Frontmatter} has keywords to hold metadata of the test. These keywor
 %
 \item \texttt{author} - contains the identification of the author of the test;
 %
-\item \texttt{flags} - contains a list of booleans for each test property, the properties being: (1) \texttt{onlyStrict}, the test is only executed in strict mode; (2) noStrict, the test will only be executed in mode \emph{sloppy}; (3) \texttt{module}, the test must be integrated as a \texttt{JavaScript} module; (4) \texttt{raw}, executes the test without any modification, which implies running as \texttt{noStrict}; (5) \texttt{async}, the test is contains asynchronous functions; (6) \texttt{generated}, the test generates the files specified by the property; (7) \texttt{CanBlockIsFalse} and (8) \texttt{CanBlockIsTrue}, the test will run if the property \texttt{CanBlock} of the \texttt{Agent Record} executing it is false and true respectively; (9) \texttt{non-deterministic}, indicates that the semantics used in the test are intentionally under-specified and therefore the test passing or failing should not be regarded as an indication of reliability or conformance;
-% TODO clarificar se e' necessario citar o que e' 'Agent Record' uma vez que nao vou explicar
+\item \texttt{flags} - contains a list of booleans for each test property, the properties being: (1) \texttt{onlyStrict}, the test is only executed in strict mode; (2) noStrict, the test will only be executed in mode \emph{sloppy}; (3) \texttt{module}, the test must be integrated as a \texttt{JavaScript} module; (4) \texttt{raw}, executes the test without any modification, which implies running as \texttt{noStrict}; (5) \texttt{async}, the test is contains asynchronous functions; (6) \texttt{generated}, the test generates the files specified by the property; (7) \texttt{CanBlockIsFalse} and (8) \texttt{CanBlockIsTrue}, the test will run if the property \texttt{CanBlock} of the \colorbox{orange}{\texttt{Agent Record}} executing it is false and true respectively; (9) \texttt{non-deterministic}, indicates that the semantics used in the test are intentionally under-specified and therefore the test passing or failing should not be regarded as an indication of reliability or conformance;
+% QUESTION clarificar se e' necessario citar o que e' 'Agent Record' uma vez que nao vou explicar
 %
 %
 \item \texttt{features} - contains a list of features that are used in the test;
@@ -277,22 +277,17 @@ The \texttt{Frontmatter} has keywords to hold metadata of the test. These keywor
 \item \texttt{es5id} and \texttt{es6id} - indicates that the feature being tested belongs to ECMAScript 5 and 6 respectively and contains the hash identifier of the section of the standard it belongs to; these keywords have been deprecated and substituted by esid.
 \end{itemize}
 
+
 % Varias observacoes: 
-%   - A metada esta muitas vezes INCOMPLETA e algumas vezes incorrecta 
-
+%  - A metada esta muitas vezes INCOMPLETA e algumas vezes incorrecta 
 %  - é preciso calcular a metadata certa
+As Figure 5 illustrates, it is often the case that the metadata of a test is incomplete. Some tests also have the wrong metadata. As part of this thesis, we plan to process all the tests to check and correct their corresponding metadata as well as completing the metadata that is \colorbox{orange}{missing.}
 
-
-% As Example 5 illustrates, it is often the case that the metadata of a test is incomplete. Some tests also have the wrong metatada. As part of this thesis, we plan to process all the tests to check and correct their corresponding metadata.  
-%TODO
-
-
-
-
+%% QUESTION juntar os paragrafos?
 
 %% metadados que achamos relevantes e nao estao incluidos
 %% ...
-The example in Figure \ref{fig:Test262_example} has 2 keywords, description and the deprecated es5id. Besides the obvious upgrade from \texttt{es5id} to \texttt{esid} it would be useful to have \texttt{includes} with the \texttt{harness} files needed to execute the test. The \texttt{harness} information is very useful since it makes it easy to identify the part of the \texttt{harness} needed to run that test, opening the door for loading only part of the \texttt{harness} instead of the whole \texttt{harness} which is the current approach.
+\colorbox{orange}{The example} in Figure \ref{fig:Test262_example} has 2 keywords, description and the deprecated es5id. Besides the obvious upgrade from \texttt{es5id} to \texttt{esid} it would be useful to have \texttt{includes} with the \texttt{harness} files needed to execute the test. The \texttt{harness} information is very useful since it makes it easy to identify the part of the \texttt{harness} needed to run that test, opening the door for loading only part of the \texttt{harness} instead of the whole \texttt{harness} which is the current approach.
 
 
 
@@ -301,53 +296,107 @@ The example in Figure \ref{fig:Test262_example} has 2 keywords, description and 
 In order to have a more complete \texttt{Frontmatter} we suggest adding the following information:
 
 \begin{itemize}
-    \item \texttt{static construct} - list of static constructions used in the test
-    \item \texttt{version} - the ECMAScript version of the standard after which the test belongs to
-    \item \texttt{built-ins} - list of all the built-ins used in the test
+    \item \texttt{syntactic construct} - list of all syntactic constructions used in the test;
+    \item \texttt{version} - the ECMAScript version of the standard in which the feature being tested was introduced;
+    \item \texttt{built-ins} - list of all the built-ins used in the test.
+    \item \colorbox{orange}{\texttt{harness-functions}} - list of all the harness functions used to asses the test's results.
 \end{itemize}
+% QUESTION posso adicionar isto? acho que era suposto fazer parte da minha tese; se calhar nao faz sentido, mas sim ter a informacao do includes segundo o standar (com o nome dos ficheiros da harness necessarios para o test)
 
-This metadata provides helpful information to solve the problem mentioned before of selecting the relevant tests for partial implementations. 
+This metadata provides helpful information to solve the problem mentioned before, selecting the applicable tests for partial implementations, by allowing developers to filter tests by \texttt{builtin}, \texttt{static construct} and \texttt{version} of the \texttt{ECMAScript} standard. This would provide consistency and standardization to the selection of applicable tests to a partial implementation of the standard. As for the \texttt{harness-functions}, it provides the information of about the functions of \texttt{harness} that are used in the test, that is relevant because only a small part of the \texttt{harness} is need in each test even though the \colorbox{orange}{whole library is loaded}.
+% QUESTION suponho que o maior problema seja que todos testes da harness sejam corridos e nao o facto de toda a biblioteca seja carregada
+
+
+
+
 
 \subsection{An Infrastructure for testing reference implementations of the ECMAScript standard}
 \label{subsec:An Infrastructure for testing reference implementations of the ECMAScript standard}
-%% Metodologia
-% - metadados da Test262 -> estruturados
 
-% - quais são os novos metadados incluídos
-
-% - sumário das abordagens utilizadas para os calcular
-
-% - shortcomings...
-% ----------------------------------------------------
-% This thesis continues the thesis of Miguel Trigo entitled ..., in which the author processed all Test262 tests, checked their metadata and computed 
 % Resumo da tese do Miguel 
+This thesis continues the work done in the master thesis of Miguel Trigo titled \emph{Infra-estrutura de Testes para Implementações de Referência do Standard ECMAScript}. In Miguel Trigo's master thesis, he \colorbox{orange}{processed} all Test262 tests and checked their metadata,  correcting some errors that \colorbox{orange}{were} found and complementing some metadata that is missing in the \texttt{Frontmatter}. The author also added new metadata that out of the scope of the \texttt{Frontmatter}, added statistical data about the tests, and made all the previously mentioned data available in a \texttt{MongoDB} database.
+% QUESTION da' a sensacao que o miguel fez tudo a mao? devia mencionar que ele automou o processo de gerar metadata?
+% QUESTION past tense?
 
+
+% - Corrigir a metadata dos testes incorrectos e calcular metadata adicional ????
 % - construir uma base de dados com a metadata dos varios testes em formato JSON 
+Miguel Trigo processed the test in Figure \ref{fig:Test262_example} and generated the metadata in Figure \ref{fig:json_metadata}. The \texttt{Frontmatter} in the test has the \texttt{es5id} and \texttt{description}, in the generated metadata they are represented for the \texttt{name} and \texttt{value} pairs \texttt{esid} and \texttt{description} respectively \colorbox{orange}{(updating the deprecated es5id)}.
+% QUESTION conta como correcao? eu devo arranjar um exemplo de uma correcao que ele fez? ou so' mensionar?
+%
+%
+The following \texttt{names} were added by Miguel Trigo:
 
-% Exemplo 
+\begin{itemize}
+    \item \texttt{path} - stores the path to the test within \texttt{Test262};
+    \item \texttt{version} - stores the version of the \texttt{ECMAScript} standard that the test corresponds to;
+    \item \texttt{built-ins} - stores a subpart of the \texttt{path};
+    \item \texttt{Array} - stores the subpart of the \texttt{path} that follows \texttt{built-ins};
+    \item \texttt{syntactic\_construct} - stores an array with all the syntactic constructions used in the test;
+    \item \texttt{builtIns} - stores an array with all the builtins used in the test;
+    \item \texttt{asserts} - stores the number of times the \texttt{assert} library is used in the test;
+    \item \texttt{error} - \colorbox{orange}{TODO Nao sei o que representa};
+    \item \texttt{esprima} - stores whether or not the test is supported by \texttt{Esprima}\cite{Esprima} (\texttt{Esprima} is an standard-compliant \texttt{ECMAScript} parser that is also developed in \texttt{ECMAScript});
+    \item \texttt{lines} - stores the number of lines of code written in the test, ignoring the empty lines and comments (in this example the \texttt{value} is 3 because lines 12 and 13 in Figure \ref{fig:Test262_example} are one single line in the actual test in \texttt{Test262} that was split in the example to make the image more legible).
+\end{itemize}
+
+% Exemplo
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/json_metadata.png}
+    \caption{Metadata generated for test esid: 15.4.5-1.js}
+    \label{fig:json_metadata}
+\end{figure}
+
+The metadata can be separated into four parts. Firstly, the \texttt{Frontmatter} part, \texttt{description} and \texttt{esid}, that stores information related to the \texttt{Frontmatter} of the test. Secondly, the path part comprised of \texttt{path}, \texttt{built-ins}, and \texttt{Array}, that contains the information related to the path of the test inside the \texttt{Test262}. Thirdly, the statistical part formed by \texttt{asserts}, \texttt{error}, \texttt{esprima}, and \texttt{lines}, that provides statistics on the code of the test and the metadata generation process.
+%
+% - Metadata adicional calculada para cada teste:
+Finally, the new metadata part which consists of \texttt{version}, \texttt{syntactic\_construct}, and \texttt{builtIns}, the new metadata is relevant information about the tests that should be added to the \texttt{Frontmatter}.
 
 
-% - Corrigir a metadata dos testes incorrectos e calcular metadata adicional 
-
-
-% - Metadata adicional calculada parra cada teste:
-
-% - 
-
-% - 
-
-% -
 
 % Para cada um dos tipos de metadata 
-% um paragrafo a explicar sucintamente como é que a metada foi calculada 
-
-% - static 
+In the remaining of the subsection is concerned with how the new metadata, namely \texttt{syntactic\_construct}, \texttt{builtIn}, and \texttt{version}.
 
 
-% - version 
+% - how syntactic cosntruct is calculated 
+\paragraph{Calculation of syntactic\_Construct metadata}
+The \texttt{syntactic\_construct} metadata is calculated with the help of \texttt{Esprima}, which allows the analysis of the \colorbox{orange}{syntactic tree} of the test. The tree analysis of the test is represented in a JSON format and the \texttt{syntactic\_constructs} are the \texttt{values} corresponding to the \texttt{names} \emph{type} of every element of the tree. This way, to get all the \texttt{syntactic\_construct} is only a matter of traversing the tree and adding any new one found. The main problem being that \texttt{Esprima} only supports till version 7 of the \texttt{ECMAScript} standard, and also the \texttt{negative} tests that \texttt{Esprima} does not support.
+% QUESTION imagem do JSON retornado pelo esprima?
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/test_syntactic_tree.png}
+    \caption{Example test}
+    \label{fig:test_syntactic_tree}
+\end{figure}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{images/JSON_syntactic_tree.png}
+    \caption{syntactic tree of the example test in Figure \ref{fig:test_syntactic_tree}}
+    \label{fig:JSON_syntactic_tree}
+\end{figure}
+
+% - how built-ins is calculated
+\paragraph{Calculation of built-ins metadata}
+The \texttt{built-ins} are calculated with two separate methods. The first method makes use of syntactic tree generated from \texttt{Esprima}, to find key \texttt{static\_constructs} to identify the \texttt{built-ins} being used. While the second method goes through the code of a test and finds all the functions and associates them with their \texttt{built-ins}, as well as the finding \texttt{built-ins} being used directly. In both methods, after all the \texttt{built-ins} of a test are identified, the \texttt{built-in} that corresponds to the most recent version of the \texttt{ECMAScript} standard identifies the version of that test. 
 
 
-% - built-ins
+% - how version is calculated 
+\paragraph{Calculation of Version metadata}
+The \texttt{version} metadata is calculated by identifying the element, \texttt{built-in}, \texttt{syntactic\_construct} or change in behavior of functions that is part of the newest version of the \texttt{ECMAScript} standard. The version is calculated using 3 different approaches dynamic, static, and mixed.
+%
+The dynamic approach is based on the waterfall model, running the tests against an implementation of the standard. if the test passes then the test is associated with that version of the standard, otherwise the test will be run against the next version of the implementation of the standard.
+%
+The static approach uses the syntactic tree generated with \texttt{Esprima}. From the analysis of the syntactic tree all the objects, functions, properties, operators, variables, and syntactical constructions present in the test are found, then searches for the oldest version that contains all of them.
+%
+The mixed approach is calculated using the dynamic and static approaches. The mixed approach consists of running the results of the dynamic approach of each version and verifying that is does not use features introduced in a posterior version. The dynamic approach makes use of \texttt{SpyderMonkey} and \texttt{Node.js} implementations of the standard. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{images/waterfall_model.png}
+    \caption{waterfall model of the dynamic approach}
+    \label{fig:waterfall_model}
+\end{figure}
 
 \section{Related Work}
 \label{sec:Related Work}
@@ -382,6 +431,7 @@ This metadata provides helpful information to solve the problem mentioned before
 \section{Evaluation and Planning}
 \label{sec:Evaluation and Planning}
 % TODO GANT Diagram
+\colorbox{orange}{pedir descricao da teses de uma das primeiras reunioes (iPad)}
 
 \section{Conclusion}
 \label{sec:Conclusion}
