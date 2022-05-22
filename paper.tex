@@ -321,33 +321,34 @@ This thesis continues the master thesis of Miguel Trigo\cite{Thesis_Miguel_Trigo
 
 
 % Para2 --> estrutura da metadata
-In \texttt{MetaData262 v0}, each test is associated with a JSON object storing the various metadata properties of the test and their corresponding values. Those metadata properties being the keywords of the \texttt{Frontmatter} mentioned in the previous section.
+In \texttt{MetaData262 v0}, each test is associated with a JSON object storing the various metadata properties of the test and their corresponding values, with those metadata properties being the keywords of the \texttt{Frontmatter} mentioned in the previous section.
 %
-Besides, the existing metadata properties, various new properties were added to \texttt{MetaData262 v0}. We can divide these new properties into 3 main groups: location, extra front matter, and statistics. Each of these groups will be discussed next.
+Besides the existing metadata properties, various new properties were added to \texttt{MetaData262 v0}. We can divide these new properties into 3 main groups: location properties, extra front matter properties, and statistics properties. Each of these groups will be discussed next.
 
 % Para 2.1 [path] (location)
 \paragraph{Location group}
-The location group contains information about the path to the test inside the \texttt{Test262}, having the property \texttt{path} associated to a string with the full path to the test.
-% (ignored) there are also some properties that are subparts of the path and store their child.
+The location group contains information about the path to the test inside the \texttt{Test262}. It consists of the properties \texttt{path}, storing the relative path to the test starting at the root of the \texttt{Test262} project, and splitPath, storing the array obtained by splitting the \texttt{path} string into its corresponding folders.
 
 
 % Para 2.2 [extra front matter: syntactic constructs, built-ins, version] 
 \paragraph{Extra front matter group}
-The extra front matter group contains new metadata generated for \texttt{MetaData262 v0}. The new metadata generated is associated with the properties: \texttt{syntactic\_construct}, \texttt{version}, and \texttt{builtIns} that were mentioned in the previous section as important metadata to add. \texttt{Version} stores the \texttt{ECMAScript} standard version the test belongs to. \texttt{Syntactic\_construct} stores an array with all the syntactic constructions that the test contains. As for \texttt{BuiltIns}, it stores all the built-ins that test interacts with and associates with each built-in its fields and functions that are used.
+The extra front matter group contains new metadata generated for \texttt{MetaData262 v0}. The new metadata generated is associated with the properties: \texttt{syntactic\_constructs}, \texttt{version}, and \texttt{builtIns} that were mentioned in the previous section as important metadata to add. The property \texttt{version} stores the \texttt{ECMAScript} standard version the test belongs to. The property \texttt{syntactic\_construct} stores an array with all the syntactic constructions that the test contains. As for \texttt{builtIns}, it stores all the built-ins that the test interacts with, mapping each built-in to its fields and methods used by test. 
 
 
 % Para 2.3 [statistics]
 \paragraph{Statistics group}
-Finally, the statistics group contains some statistical data about the tests. The properties this group has associated are \texttt{asserts}, \texttt{error}, \texttt{esprima}, and \texttt{lines}. The \texttt{asserts} property holds the amount of \texttt{assert} statements in the test. The \texttt{error} property stores the amount of calls made to the \texttt{Test262} error functions. The \texttt{esprima} property stores \emph{supported} or \emph{not supported} depending on whether \texttt{Esprima}\cite{Esprima} supports the test. \texttt{Esprima} is a standard-compliant \texttt{ECMAScript} parser that is also developed in \texttt{ECMAScript}, \texttt{Esprima} fully supports up to version 7 of the standard. The property \texttt{lines} holds the number of lines of code the test has, comments as well as empty lines are ignored.
+Finally, the statistics group contains some statistical data about the tests. It contains the properties: \texttt{asserts}, \texttt{error}, \texttt{esprima}, and \texttt{lines}. The \texttt{asserts} property holds the amount of \texttt{assert} statements in the test. The \texttt{error} property stores the amount of calls made to \texttt{Test262} error functions. The \texttt{esprima} property stores a boolean value indicating whether or not the Esprima\cite{Esprima} parser supports the test. \texttt{Esprima} is a standard-compliant \texttt{ECMAScript} parser fully developed in \texttt{ECMAScript}; \texttt{Esprima} fully supports up to version 7 of the standard. The property \texttt{lines} holds the number of lines of code the test has, excluding comments and empty lines.
 
 
 
-% Para3 --> exemplo da MetaData262 v0 
+\subsubsection{Example}
+
+% Para3 --> exemplo da MetaData262 v0
 Figure \ref{fig:json_metadata} shows the JSON object storing the metadata generated from the Test262 test given in Figure \ref{fig:Test262_example}. 
 % Observacoes sobre o exemplo 
-The JSON object begins with the \texttt{path} property and the path to the test associated with it. After, the \texttt{version} property indicates that this test belongs to the fifth version of the standard, if the version is not able to be calculated the field will be omitted. Followed by properties in the test's \texttt{Frontmatter} (note that the deprecated \texttt{es5id} is replaced to the \texttt{esid} property).
+The JSON object begins with the \texttt{path} property storing the path to the test at hand. After, the \texttt{version} property indicates that this test belongs to the fifth version of the standard. If \texttt{MetaData262 v0} was not able to compute the version of the test, this field is omitted. Next, we have the properties corresponding to the test's \texttt{Frontmatter} (note that the deprecated \texttt{es5id} is replaced to the \texttt{esid} property).
 % ignorar as propriedades buit-ins e Array
-Next is the \texttt{static\_construct} property that holds an array with the syntactic constructors of the test that were generated. The \texttt{builtIns} property holds a JSON object, in which, each property corresponds to a built-in and associated to it are its functions and fields that are interacted with in the test. Finally, the statistics group of properties. The \texttt{asserts} property that indicates that one assert statement is used in this test, the \texttt{error} holding zero since no error functions of the \texttt{Test262} were used in this test, the \texttt{esprima} property that indicates this test is supported by \texttt{Esprima}, and the \texttt{lines} property indicates that this test has 3 lines of code (the example in Figure \ref{fig:Test262_example} splits the last line of the test in order to improve the readability of the figure hence only 3 lines are counted in the actual test).
+Next we have the \texttt{static\_constructs} property that holds an array with the syntactic constructors of the test. The \texttt{builtIns} property holds a JSON object, in which, each property corresponds to a built-in mapped to its functions and fields that are interacted with in the test. Finally, we have the statistics group of properties. The \texttt{asserts} property indicates that this test uses one assert statement. The \texttt{error} holds the numeric value zero since this test uses no error functions of \texttt{Test262}. The \texttt{esprima} property indicates this test is supported by \texttt{Esprima}. Finally, the \texttt{lines} property indicates that this test has 3 lines of code. Note that the example in Figure \ref{fig:Test262_example} splits the last line of the test in order to improve the readability of the figure hence only 3 lines are counted in the actual test).
 
 
 \begin{figure}[ht]
@@ -358,24 +359,29 @@ Next is the \texttt{static\_construct} property that holds an array with the syn
 \end{figure}
 
 
+
+\subsubsection{Metadata Computation}
+
 % Para4 --> a metada original em falta teve de ser calculada e os 
 % // bem como os novos campos da metadata -> 
-As part of the setting up of MetaData262 v0,  M. Trigo had to compute the missing \texttt{Frontmatter} properties as well as the values of the new properties that he introduced. In most cases, the computation was straightforward, only involving a simple syntactic analysis of each test. However, the computation of the version and the built-ins used in each test was more involved and we will go through it in more detail below.
-% [...]
+As part of the setting up of MetaData262 v0,  M. Trigo had to compute the missing \texttt{Frontmatter} properties as well as the values of the new properties that he introduced. In most cases, the computation was straightforward, only involving a simple syntactic analysis of each test. However, the computation of the version and the built-ins used in each test was more involved. We will go through this process in more detail below.
 
 % Para5 --> Version Computation 
 \paragraph{Calculation of Version metadata}
-The \texttt{version} of the standard a test belongs to is calculated using 3 different approaches: dynamic, static, and hybrid.
-%
-% dynamic approach
-The dynamic approach is based on the waterfall model, running the tests in various JS engines, each corresponding to a specific version of the standard. As Figure \ref{fig:waterfall_model} illustrates, each test starts by running in the JS engine corresponding to version 5 of the \texttt{ECMAScript} standard (represented as ES). If the test output is correct then the test belongs to version 5 of the standard, otherwise the test will be run in the engine implementing the next version of the standard. This process repeats until the last engine, associated with version 11 of the standard, if the test output is not the expected again then the test is not supported.
-%
-% static approach
-The static approach evaluates the syntactic tree of the test generated by \texttt{Esprima}, a widely used JS parser, as a JSON object. Starts by finding all the \texttt{JavaScript} keywords in the AST. Then associates each JS keyword with the version of the standard it was introduced in. Finally, the keyword with the most recent version associated will dictate the test version. For example, if the test has only two keywords associated with version 6 and 8, then the test will belong to the version 8 of the standard.
-%
-% hybrid approach
-The hybrid approach is calculated using the results of the dynamic and static approaches. The hybrid approach merges the results by maintaining the higher version detected between each approach for each test. For instance, if the dynamic approach's result for a test is version 6 and the static's result for the same test is version 8, then, the test with belong to the version 8 of the standard according to the hybrid approach.
+The \texttt{version} of the standard a test belongs to is calculated using 3 different approaches: dynamic, static, and hybrid.Below we give a brief overview of each method:
 
+\begin{itemize}
+  \item \emph{Dynamic Approach:}
+The dynamic approach is based on the waterfall model, running the tests in various JS engines, each corresponding to a specific version of the standard. As Figure \ref{fig:waterfall_model} illustrates, \texttt{MetaData262 v0} starts by running each test in the JS engine corresponding to version 5 of the \texttt{ECMAScript} standard (represented as ES). If the test output is correct then the test is labelled as belonging to version 5 of the standard, otherwise the test will be run in the engine implementing the next version of the standard. This process repeats until the last engine, associated with version 11 of the standard. If the test output is not the expected again, then the test is not supported.
+%
+  \item \emph{Static Approach:}
+The static approach determines the version of a test by analyzing the static keywords of the test. Essentially, a test is labeled with the version corresponding to the keyword with the latest associated version; formally:
+\[version(test) = max \{ version(keyword) | keyword \in test \} \]
+For instance, if a test contains two keywords introduced in versions 6 and 8, then the test will belong to the version 8 of the standard. \texttt{MetaData262 v0} implements the static approach in the following way. It maintains an internal map associating each keyword with the version in which it was introduced. Given a test to be labeled, \texttt{MetaData262 v0} first computes the AST of the test using the \texttt{Esprima} parser and then traverses the AST to obtain all the keywords used in the test. Finally, it labels the test with the version of the latest keyword (as discussed above). 
+%
+  \item \emph{Hybrid Approach:}
+The hybrid approach is calculated using the results of the dynamic and static approaches. The hybrid approach merges the results by maintaining the higher version detected between each approach for each test. For instance, if the dynamic approach's result for a test is version 6 and the static's result for the same test is version 8, then, the test is labeled as belonging to version 8 of the standard according to the hybrid approach.
+\end{itemize}
 
 
 \begin{figure}[ht]
@@ -387,11 +393,17 @@ The hybrid approach is calculated using the results of the dynamic and static ap
 
 
 
-
 % Para6 --> Built-in Computation 
 \paragraph{Calculation of built-ins metadata}
-The \texttt{built-ins} used by each test are calculated using two separate approaches: dynamic and static. As in the calculation if the \texttt{ECMAScript} version both approaches are combined to improve the results. The static approach makes use of syntactic tree generated by \texttt{Esprima} as a JSON object from the test code. Next, traverses the AST to find expressions that interact with built-in objects. In addiction to the built-in, the fields and functions will also be outputted. As for the dynamic approach, it makes use of the built-ins functions in order to log whenever the function is called. In essence, a wrapper was created for each function that replaces it, the wrapper first logs that it was called, and then preforms the original method with the arguments that were supplied.
+The \texttt{built-ins} used by each test are calculated using two separate approaches: dynamic and static. As in the calculation of the \texttt{ECMAScript} version both approaches are combined to improve the results. Below, we describe each approach separately:
 
+\begin{itemize}
+  \item \emph{Static Approach:}
+The static approach maintains an internal map associating each built-in method and property with the name of the corresponding  built-in object (e.g. the method hasOwnProperty is associated with the built-in object \texttt{Object}). The static approach first computes the AST of the test using \texttt{Esprima} and then traverses the AST checking for each method and property for the built-in object it is associated with. In the end, it outputs a JSON object mapping each built-in object to an array with the names of its methods and properties that the test uses. 
+%
+  \item \emph{Dynamic Approach:}
+The dynamic approach works by running the actual code of the test and logging the interactions of the test with the JavaScript built-ins. To this end, \texttt{MetaData262 v0} wraps the methods of every built-in object in an auxiliary function that calls the corresponding methods and adds an entry to the log registering that call. Finally, \texttt{MetaData262 v0} analyses the log information to determine the built-in methods used by the test. 
+\end{itemize}
 
 
 
@@ -417,6 +429,7 @@ The \texttt{built-ins} used by each test are calculated using two separate appro
 % dinamica 
 % --> ha informacao em falta 
 % ficheiros da harness e funcoes da harness
+% data de criação do teste 
 % Para 2 --> Problemas de acesso a metadata e obtencao de informacao estatistica 
 % sobre os testes 
 % --> neste momento quem quiser obter informacao estatisca sobre os 
@@ -424,7 +437,7 @@ The \texttt{built-ins} used by each test are calculated using two separate appro
 % como entender
 % O objectivo desta tese é resolver estes dois problemas. 
 % 5.1 - Precise Metadata for test262 tests 
-% --> calcular a metadata precisamente 
+% --> calcular a metadata precisamente e de forma facilmente reproducible 
 % 5.1.1 versao -> 
 % Montar um sistema escalavel para o calculo das versoes 
 % associamos a cada versao um numero arbitrario de docker images cada uma 
@@ -491,10 +504,27 @@ The website for visualizing the metadata aims to make access to the metadata and
 
 \section{Evaluation and Planning}
 \label{sec:Evaluation and Planning}
-% TODO GANT Diagram
-\colorbox{orange}{pedir descricao da teses de uma das primeiras reunioes (iPad)}
 
-\colorbox{orange}{Qual e' o plano pois nao tenho a certeza do que e' suposto realizar}
+
+% Evaluation 
+% - Discutimos avaliação das duas componentes do projecto 
+% Componente 1 -> sistema para calculo da metadata
+% É muito difícil de avaliar porque não há ground truth -> nós não sabemos qual é a versão dos testes
+% - vamos seleccionar um conjunto aleatório de testes e analisa-los à mão comparando a versão calculada com a versão que sabemos ser a versão do teste 
+% - vamos tb determinar a versão utilizando à data em que o teste foi inserido na Test262 -> pela data sabemos a versão corrente -> vamos olhar particularmente para os testes em que a versão calculada difere da versão da data dos testes 
+% -> Atenção que a versão à data do teste não é necessariamente a versão do teste -> mas dá uma indicação
+% --> testes analisados manualmente são os testes para os quais há grandes discrepâncias entre a versão à data do teste e a versão calculada para o teste
+% Componente 2 -> sistema de visualisacao 
+% -- testes unitários para testar as funcionalidades base da aplicação 
+% -- end-to-end tests -> testes do front-end 
+% Planning -> usar texto equivalente ao Miguel Trigo 
+% - Melhoria do sistema de calculo da metadata - 2 meses
+% - Conclusão do sistema de visualização - 2 meses
+% - Avaliação - 1 mês 
+% - Thesis Writing - 2 meses 
+% Julho - (Agosto férias) - Novembro
+
+
 
 \section{Conclusion}
 \label{sec:Conclusion}
