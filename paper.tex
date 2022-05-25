@@ -417,8 +417,8 @@ The dynamic approach works by running the actual code of the test and logging th
 \label{sec:Design and Methodology}
 
 
-In this section we will discuss the improvements this thesis will make to \texttt{MetaData262 v0} as well as the MetaData262 visualization system that will be created to improve ease of access to the MetaData262 information. 
 
+We recall that this thesis has two goals. Firstly, we want to improve \texttt{MetaData262 v0} in two ways: add support for missing metadata elements, and improve the infrastructure for the metadata computation, making the obtained metadata more reliable and the process faster and reproducible. Secondly, we want to create a visualisation system for easy selection of tests and display of test statistics.
 
 
 \subsection{Improvements to MetaData262 v0}
@@ -438,14 +438,14 @@ In this section we will discuss the improvements this thesis will make to \textt
 % --> ha informacao em falta 
 % ficheiros da harness e funcoes da harness
 % data de criação do teste 
-The metadata calculated by \texttt{MetaData262 v0} is flawed several ways: in the version calculation, in the built-in calculation, and in the harness calculation. These flaws will described in more detail next.
+The metadata calculated by \texttt{MetaData262 v0} is flawed in several ways: in the version calculation, in the built-in calculation, and in the harness calculation. We describe these flaws and how to fix them in more detail next.
 
 \begin{itemize}
-\item \emph{Version Calculation} - The version calculation is flawed in both the static and dynamic approach, meaning that the hybrid approach that uses the results of the previous two will also be compromised. The static approach is flawed since the \texttt{Esprima} parser only supports fully up until \texttt{ECMAScript} version 7. The solution to that is to find a JS parser that supports a later version of the standard. The dynamic approach's flaw lies in the way it works, since there is no JS engine that fully supports a version of the standard and only that one. To improve the dynamic approach we will add more JS engines.
+\item \emph{Version Calculation} - The version calculation is flawed in both the static and dynamic approachs, meaning that the hybrid approach that uses the results of the previous two will also be compromised. The static approach is flawed since the \texttt{Esprima} parser only fully supports up to \texttt{ECMAScript} version 7. Improvements can be made by finding a \texttt{JavaScript} parser that supports a later version of the standard. The dynamic approach's flaw lies in the way it works, since there is no JS engine that fully supports a version of the standard and only that one. To improve the dynamic approach we will add more JS engines. By adding more data points to the calculation, we will increase the reliability of the obtained metadata.
 %
-\item \emph{Built-in Calculation} - The built-in calculation is also flawed in both the static and dynamic approach. The static approach has the same flaw since \texttt{Esprima} is the parser used. Therefore the same improvement can be made, finding a newer parser. As for the dynamic approach is is flawed due to the fact that only function calls are detected, if the properties of a built-in are change directly then it will not be detected. For example if the test preforms \texttt{Array.prototype.pop = 3;} then the property prototype of the Array built-in will be changed even though no function call was made and it will go undetected by the dynamic approach.
+\item \emph{Built-in Calculation} - The built-in calculation is also flawed in both the static and dynamic approachs. The static approach has the same flaw since it also uses \texttt{Esprima} as parser. Therefore the same improvement can be made by finding a newer parser. As for the dynamic approach, it is flawed due to the fact that only function calls are logged and therefore detected. If the properties of a built-in are changed directly then it will not be detected. For example if a test preforms \texttt{Array.prototype.pop = 3;} then the property \texttt{prototype} of the Array built-in will be changed even though no function call was made. This can not be detected by the current dynamic approach.
 %
-\item \emph{Harness Calculation} - The harness calculation very flawed containing only the little information available in the \texttt{Frontmatter} of a few tests. This calculation can be improved by completing \texttt{includes} metadata and adding the \texttt{harness-functions} metadata. Both are mentioned in earlier sections, the \texttt{includes} stores the files of the \texttt{harness} needed to run the test and the \texttt{harness-functions} will store the functions from those files that are actually used.
+\item \emph{Harness Calculation} - The \texttt{harness} calculation is not done, including only the little information available in the \texttt{Frontmatter} of a few tests. This calculation can be improved by completing \texttt{includes} metadata and adding an additional \texttt{harness-functions} metadata. Both \texttt{includes} and \texttt{harness-functions} are mentioned in earlier sections, the first stores the files of the \texttt{harness} needed to run the test and the second will store the functions from those files that are actually used in the test.
 \end{itemize}
 
 
@@ -459,7 +459,13 @@ The metadata calculated by \texttt{MetaData262 v0} is flawed several ways: in th
 % ---> parelelizacao etc
 % 5.1.2 built-ins -> melhorar a instrumentcao para o calculo dinamico dos 
 % built-ins --> em particular, apanhar property look-ups dinamicamente
-Improving the calculations of the \texttt{MetaData} will enhance the issue of performance, we will improve the performance with the use of \texttt{docker}\cite{docker} containers and this way we will also improve the ease to replicate the calculations. The duration to calculate the version with the dynamic approach scales linearly with the amount of engines per standard version being used. In \texttt{MetaData262 v0} only two JS engines are being used and the dynamic approach duration takes multiple hours to run. With the use of \texttt{docker} containers we will be able to make the parallelize the work of the dynamic approaches through multiple docker images. Containers running in parallel will not only improve the performance but also allow MetaData262 to be replicated in an easier way since the is less requirements and the replication will be standardized.
+The improvements the \texttt{MetaData} calculation precision, in particular the version dynamic approach, will enhance the issue of performance. This issue will be improved with the use of \texttt{docker}\cite{docker} containers and this way we will also improve the ease to replicate the calculations of the \texttt{MetaData}.
+%
+The duration to calculate the version with the dynamic approach scales linearly with the amount of engines per standard version being used. In \texttt{MetaData262 v0} only two JS engines are being used and the dynamic approach already takes multiple hours to run.
+%
+With the use of \texttt{docker} containers we will be able to parallelize the work of the dynamic approaches by multiplying the docker images that run the JS engines. Containers running in parallel will not only improve the performance but also allow MetaData262 to be replicated in an easier way since it requires a smaller configuration effort to replicate the \texttt{MetaData} calculation.
+% TODO rescrever comentarios do prof
+
 
 \subsection{MetaData262 Visualization System}
 \label{sub:metadata262_visualization_system}
@@ -472,7 +478,7 @@ Improving the calculations of the \texttt{MetaData} will enhance the issue of pe
 % O objectivo desta tese é resolver estes dois problemas.
 
 % Para 0 --> Motivar a criacao do system de visualizacao
-The \texttt{MetaData262 Visualization System} appears to ease the barrier to access the \texttt{MetaData262 v0} information and statistics. Right now the metadata is hosted in a MongoDB database leading to the need to have knowledge of MongoDB to get the information. After getting the information there would most likely be a need to process that data and maybe even generating charts to provide statistics of the data. This is visualization system will make this process much easier. 
+The \texttt{MetaData262 Visualization System} appears to ease the barrier to access the \texttt{MetaData262 v0} information and statistics. Right now the metadata is hosted in a MongoDB database leading to the need to have knowledge of MongoDB to get the information. After getting the information there would most likely be a need to process that metadata and maybe even generating charts to provide statistics. This is visualization system will make this process much easier.
 
 % 5.2 - MetaData Visualisation System 
 % portal para visualizacao da metadata dos testes + informacao estatisca sobre os testes 
@@ -484,17 +490,21 @@ The \texttt{MetaData262 Visualization System} appears to ease the barrier to acc
 % -- ...
 
 % Para 1 --> O que o website vai mostrar e o que para isso e' necessario fazer
-The \texttt{MetaData262 Visualization System} is in its core a web application that allows users visualize the metadata calculated easily and updates it self whenever there are changes in \texttt{Test 262}. Users are will to filter the metadata for the built-ins and version of the test. Users will also be able visualize the queried information in different ways: \texttt{PATH}, \texttt{JSON}, and \texttt{STATS}. The \texttt{PATH} will only show the path to the tests in \texttt{Test262}. The \texttt{JSON} will allow the users to see the full metadata calculated for the tests. Finally, the \texttt{STATS} will show some statistics about the tests queried. To ensure that the information is up to date this system needs to update it self since this is a thesis project and there is no active developer team. In order to accomplish that, the system will need check for changes, be it in the form of new tests or changes to existing ones, and calculate the new metadata.
+The \texttt{MetaData262 Visualization System} is in its core a web application that allows users visualize and filter the \texttt{Test262} metadata easily. The system will also update itself whenever there are changes in \texttt{Test262}. Users are able to filter the metadata by the built-ins and version of the test. Users will also be able visualize the queried information in different ways: \texttt{PATH}, \texttt{JSON}, and \texttt{STATS}. The \texttt{PATH} will only show the path to the tests in \texttt{Test262}. The \texttt{JSON} will allow the users to see the full metadata calculated for the tests. Finally, the \texttt{STATS} will show some statistics about the tests queried. To ensure that the information is up to date, this system needs to update itself since this is a thesis project and there is no active developer team. In order to accomplish that, the system will need check for changes, be it in the form of new tests or changes to existing ones, and calculate the new metadata.
 
 
 % Para 2 --> O que ja esta feito
-The development of the web application has already began, in \colorbox{orange}{Figure} \ref{fig:website} it is possible to see the progress already made. The image has 2 main parts: the filters part, and the information part.
+The development of the web application has already began, \colorbox{orange}{Figure} \ref{fig:website} shows the progress already made. The image has 2 main parts: the filters part, and the information part.
 %
-The upper part is the filters part, where it is possible to select the filters for querying the metadata. The first filter, \texttt{BuiltIn Belongs} allows to select tests from the subfolders of the built-in folder in the \texttt{Test262}. The \texttt{BuiltIn Contained} enables the user to filter tests by the built-ins the tests can use. The \texttt{BuiltIn Belongs} and \texttt{BuiltIn Contained} filters are combined using \texttt{AND} or \texttt{OR} relations. The \texttt{AND} relation will only return tests that satisfy both filters. As for the \texttt{OR} relation it will return every test that satisfies either of the filters. After we have the \texttt{Version} filter that allows filtering the tests by the \texttt{ECMAScript} version. Next we have the \texttt{BACKEND SEARCH} and \texttt{LOCAL SEARCH} search buttons that will query the metadata database for the tests that satisfy the filters set. The \texttt{BACKEND SEARCH} filter the tests in the backend server while the \texttt{LOCAL SEARCH} it will filter the tests in the machine that is used to access the website.
+The upper part is the filters part, where it is possible to select the filters for querying the metadata. The first filter, \texttt{BuiltIn Belongs} allows to select tests from the subfolders of the built-in folder in the \texttt{Test262}. The \texttt{BuiltIn Contained} enables the user to filter tests by the built-ins the tests can use.
 %
-In the example the filters selected are \texttt{Object}  and \texttt{Array} for the \texttt{BuiltIn Belong} and \texttt{BuiltIn Contained} respectively with an \texttt{AND} relation and the sixth version is also selected.
+The \texttt{BuiltIn Belongs} and \texttt{BuiltIn Contained} filters are combined using \texttt{AND} or \texttt{OR} relations. The \texttt{AND} relation will only return tests that satisfy both filters. As for the \texttt{OR} relation, it will return every test that satisfies either of the filters.
 %
-Finally, the information part of the image contains the result of the query. The information can already be displayed in two of the three ways mentioned above, in the image the \texttt{PATH} is selected. Afterwards the image shows it took 16 milliseconds to have the query results available to the user. Next the image displays that a total of 32 tests satisfy the filters selected. Finally, the image shows the path of the tests tests selected. Note that not all tests are shown at the same time, in order to improve performance only 10 tests are shown at a time, at the bottom of the image is the pagination menu.
+Then, we have the \texttt{Version} filter that allows filtering the tests by the \texttt{ECMAScript} version. Next, we have the \texttt{BACKEND SEARCH} and \texttt{LOCAL SEARCH} search buttons that will query the metadata database for the tests that satisfy the filters set. The \texttt{BACKEND SEARCH} filter the tests in the backend server while the \texttt{LOCAL SEARCH} it will filter the tests in the machine that is used to access the website.
+%
+In the example, the filters selected are \texttt{Object}  and \texttt{Array} for the \texttt{BuiltIn Belong} and \texttt{BuiltIn Contained} respectively with an \texttt{AND} relation and the sixth version is also selected.
+%
+The information part of the image contains the result of the query. The information can already be displayed in two of the three ways mentioned above, in the image the \texttt{PATH} is selected. The image also shows it took 16 milliseconds to have the query results available to the user. The image displays that a total of 32 tests satisfy the filters selected. The image shows the path of the tests selected. Note that not all tests are shown at the same time, in order to improve performance only 10 tests are shown at a time, at the bottom of the image is the pagination menu.
 % QUESTION mudar o titulo do website para MetaData262 Visualization System ??
 
 
@@ -507,9 +517,11 @@ Finally, the information part of the image contains the result of the query. The
 \end{figure}
 
 
+% TODO rescrever tudo com comentarios do prof
 % Para 3 --> Trade off the fazer a filtragem local or no servidor
 In Figure \ref{fig:website} there are two search buttons because there at the time trade offs being made with either way of searching, the following results were run in the laptop serving the web application. The backend search starts getting slow whenever the amount of tests being returned surpasses 2500 in the local machine, taking on roughly half a second to get the results. The local search has the problem that it takes around 4 seconds to get all the metadata from the server at page load. The local search has the advantage of filtering the tests in a few milliseconds. Caching the metadata in the users browser would allow the metadata to be only loaded one, making the usability of the web application much better.
 
+% TODO rescrever tudo com comentarios do prof
 % Para 4 --> Os graficos que queremos gerar --> bibliotecas
 This web application will allow the user to view charts about the metadata of the tests queried. M. Trigo's thesis he generated the charts shown in Figure \ref{fig:grafico_bigodes} and Figure \ref{fig:grafico_stackBar} as well as some other pie charts and bar charts. In the web application those charts will be generated in real time with the help of external libraries. Especially the charts below, the box and whiskers chart and the stacked bar chart, are not supported by many of the most popular libraries. Two of the libraries that are capable of generating all the charts needed are the \texttt{KendoReact}\cite{KendoReact} an UI library and \texttt{Victory}\cite{Victory} a chart library. \texttt{KendoReact} is a full UI library, charts being only part of its 126 components. Whereas, the \texttt{Victory} library has only 34 components and all are directly related with generating charts. The Victory library also seams simpler to use, the community around it seams more active which would be important in case of difficulty while implementing the charts needed.
 
