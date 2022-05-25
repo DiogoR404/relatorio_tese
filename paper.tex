@@ -565,21 +565,25 @@ This web application will allow the user to view charts about the metadata of th
 % -- testes unitários para testar as funcionalidades base da aplicação 
 % -- end-to-end tests -> testes do front-end
 
-% Para 1 --> components a serem testadas
-This thesis we will make improvements to the metadata calculation of \texttt{MetaData262 v0} and create a visualization system for it. The metadata improvements are divided into precision and performance. The evaluation of this thesis contributions is described in more detail bellow.
+% Para 1 --> components a serem testados
+The evaluation of this thesis will focus in its two main elemtents: the metadata calculation infrastructure and the \texttt{Metadata262 Visualization System}. The metadata calculation infrastructure will be evaluated for its precision and performance. As for the \texttt{Metadata262 Visualization System}, it will be evaluated for its reliability. Each createria of the evatuation will be described in more detail bellow.
 
 % Para 2 --> Metadata calculation precision  
 \paragraph{Evaluation of metadata calculation precision}
-The precision of the metadata calculated is very hard to access since the is no ground truth available. For example the versions of the tests are not available. Thus, to evaluate the the metadata calculation we will select a small random group of tests to analyze manually and compare the the version calculated. A second evaluation will be made to the tests that have the biggest difference between the version calculated and the version that was the latest at the time the test was added to \texttt{Test262}. Firstly, we will find the date the test was added to \texttt{Test262} and associate it with the latest \texttt{ECMAScript} version at that time. After, we will select the tests with the biggest discrepancy between the versions. Finally we will preform a manual evaluation to ensure that the right version was calculated. Note that the version discrepancy is merely indicative as more the once tests were detected as missing and subsequently added to complement \texttt{Test262}.
+The precision of the metadata calculated is very hard to access since the is no ground truth available. The version metadata calculated is being calculated for the first time. Thus, to evaluate the presition of the metadata calculation we will select a small random group of tests to analyze manually. A second evaluation will be made to the tests that have the biggest difference between the version calculated and the version that was the latest at the time the test was added to \texttt{Test262}. Firstly, we will find the date the tests were added to \texttt{Test262} and associate them with the latest \texttt{ECMAScript} version at that time. Afterwards, we will select the tests with the biggest discrepancy between the version assotiated and the version calculated. Finally we will preform a manual evaluation to ensure that the right version was calculated. Note that the version discrepancy is merely indicative, more the once tests were detected missing and subsequently added to complement \texttt{Test262}. These tests were added when they were detected missing and not when the version was released.
+
 
 
 % Para 3 --> Metadata calculation performance
 \paragraph{Evaluation of metadata calculation performance}
-To evaluate performance improvements made to \texttt{MetaData262 v0} we will compare the time needed to preform the metadata calculation. This must be ran in the same system and with the least concurrent processes running in order to make sure we have better results.
+To evaluate performance improvements made to \texttt{MetaData262 v0} we will compare the time needed to preform the metadata calculation between the old and new infrastructures. This must be ran in the same system and with the least concurrent processes running in order to make sure we have the least interference, this way achieving the most trustworthy results.
+
+
 
 % Para 4 --> visualization system
-\paragraph{Evaluation of the visualization system}
-The visualization system evaluation will have three types of tests: unit tests, end-to-end tests and load tests. The unit tests will ensure the correctness and reliability of the system. The end-to-end tests will guarantee that the website interface works correctly. Finally, the load tests will allow us to estimate the amount of users that the systems can support.
+\paragraph{Evaluation of the visualization system reliability}
+The visualization system evaluation will have three types of tests: unit tests, end-to-end tests and load tests. The unit tests will ensure the correctness of the system's results. The end-to-end tests will guarantee that the website interface works correctly. Finally, the load tests will allow us to estimate the amount of users that the systems can support, this way allowig us to estimate the resorces need.
+
 
 
 \subsection{Planning}
@@ -593,7 +597,9 @@ The visualization system evaluation will have three types of tests: unit tests, 
 % - Thesis Writing - 2 meses 
 % Julho - (Agosto férias) - Novembro
 
-The Plan for this thesis is based on the tasks that need to be preformed in order to accomplish the objectives defined in section \ref{sec:Goals}. Thus, this thesis has 4 main task to accomplish: improving the metadata calculation, concluding the visualization system, Evaluating the results, and writing the thesis. The planning for these tasks is represented in the Gantt diagram in Figure \ref{fig:gantt} and each task is described in more detail afterwards. Note that the month of August has a grey background due to it being a vacations.
+The Plan for this thesis is based on the tasks that need to be preformed in order to accomplish the objectives defined in section \ref{sec:Goals}. Thus, this thesis has 4 main task to accomplish: improving the metadata calculation, concluding the visualization system, evaluating the results, and writing the thesis. These tasks are represented in the Gantt diagram in Figure \ref{fig:gantt} and each task is described in more detail afterwards. Note that the month of August has a grey background due to it being a vacations period.
+
+
 
 % gantt tese
 \begin{figure}[ht]
@@ -612,17 +618,23 @@ The Plan for this thesis is based on the tasks that need to be preformed in orde
 \end{figure}
 
 
+
 \paragraph{Improving metadata calculation}
-This task consists of improving \texttt{MetaData262 v0} by improving its precision and performance as discussed in section \ref{sec:Design and Methodology}. The precision will be improved with more JS engines and a JS parser that supports more recent versions of the standard. As for the performance, we will parallelize the metadata calculation.
+This task consists of improving \texttt{MetaData262 v0} by improving its precision and performance as discussed in section \ref{sec:Design and Methodology}. The precision will be improved with more JS engines and a JS parser that supports more recent versions of the standard. As for the performance, we will parallelize the metadata calculation using \texttt{docker} containers.
+
 
 \paragraph{Concluding visualization system}
-This task consists of concluding \texttt{MetaData262 v0} visualization system by adding the possibility to view statistics about the queried tests and improving the system's reliability through preparing it to handle wrong queries.
+This task consists of concluding \texttt{MetaData262 v0} visualization system by adding the possibility to view statistics about the queried tests and improving the system's reliability.
+
 
 \paragraph{Evaluation}
-This task consists of evaluating the results of the metadata generated. The most prone to error metadata will be checked by hand in order to guarantee the correctness of the results presented.
+This task consists of evaluating the results of the metadata generated. The most prone to error metadata calculation will be checked by hand in order to guarantee the correctness of the results presented. The development of the tests for the visualization system and the system itself will overlap durin the first two weeks of the evaluation. 
+
 
 \paragraph{Writing the thesis}
-This last task will consist in a report of the execution of the previous tasks. In the report we will present the results obtained as well as the conclusions reached after finishing this project. 
+This last task will consist of reporting the execution of the previous tasks, by presenting the results obtained as well as the conclusions reached after finishing this project.
+
+
 
 
 \section{Conclusion}
