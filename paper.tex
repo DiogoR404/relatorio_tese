@@ -64,7 +64,7 @@ Tel: +351 218 417 000\\
 
 %
 \begin{abstract}
-% TODO
+The ECMAScript standard is the specification for JavaScript which is one of the most popular programming languages in the world. Implementing the standard is challenging in various ways, both due to its complexity and its scale. Test262 was created to alleviate the implementations difficulty by providing a conformance test suite that allows developers to test their implementations. There is the project MetaData262 v0 that calculates the metadata of the Test262 test suite. With this thesis, we will improve the MetaData262 v0 metadata calculations as well as build infrastructure to view the metadata through a web interface. The web interface will also allow to filter tests by some characteristics such as built-ins and version of the standard as well as display statistics of the metadata.
 
 \keywords{ECMAScript \and Specification Language \and Reference Interpreters \and Test262}
 \end{abstract}
@@ -95,7 +95,6 @@ JavaScript (JS) is a programming language mainly used in the development of clie
 
 
 
-% Boa!
 % Existem muitas implementacoes diferentes da linguagem: client-side (browsers), server-side (Node.js), embedded devices (Jerryscript) -> Estas implementacoes têm de estar de acordo no comportamento observavel -> é particularmente importante na Web -> senao temos sites que em ...
 % -----------------------
 % overview do standard -> descrita num standard
@@ -106,7 +105,7 @@ JavaScript (JS) is a programming language mainly used in the development of clie
 %    um interpretador de JS tem de executar ao avaliar qualquer
 %    statement da linguagem
 % Falar sobre o comité -  quem controla a evolucao do ECMAScript
-ECMAScript standard\cite{ECMAScriptStandard} is the official document, written in the English language, in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version.
+ECMAScript standard\cite{ECMAScript} is the official document, written in the English language, in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version. 
 %
 The standard specifies the \texttt{JavaScript} language, to ensure its multiple compilers and interpreters implementations are coherent. Some of the \texttt{JavaScript} compilers are the Hop~\cite{Hop} and the JSC~\cite{JSC} compilers, the most popular interpreters are Node.js~\cite{Node.js} and SpiderMonkey~\cite{SpiderMonkey}. These are only four implementations among many others, which come along with the many use cases that \texttt{JavaScript} has.
 %
@@ -115,7 +114,6 @@ The standard specifies the \texttt{JavaScript} language, to ensure its multiple 
 
 
 
-% Good, more detail if there is time
 % Estrutura do standard
 The \texttt{JavaScript} language can be divided into three major components, those being expressions and commands, built-in libraries, and finally internal functions.
 %
@@ -135,7 +133,7 @@ The \texttt{JavaScript} language can be divided into three major components, tho
 % Expressions and statements
 % Exemplo do standard  e explicacao (if)
 \paragraph{Semantics of IF statement}
-Figure \ref{fig:If-Else Statement} shows a snippet of the ECMAScript standard description of the \texttt{IF} command. In order to evaluate \texttt{IF} commands with the shape:
+Figure \ref{fig:If-Else_Statement} shows a snippet of the ECMAScript standard description of the \texttt{IF} command. In order to evaluate \texttt{IF} commands with the shape:
 
 \begin{center}
 \texttt{if (Expression) Statement1 else Statement2}
@@ -147,7 +145,7 @@ Figure \ref{fig:If-Else Statement} shows a snippet of the ECMAScript standard de
     \centering
     \includegraphics[width=0.8\textwidth]{images/if_statement.png}
     \caption{ECMAScript definition of an if-else statement}
-    \label{fig:If-Else Statement}
+    \label{fig:If-Else_Statement}
 \end{figure}
 
 % arrays são objetos como os outros
@@ -413,12 +411,54 @@ The dynamic approach works by running the actual code of the test and logging th
 
 
 
+Estudos científicos sobre análise de programas e técnicas de instrumentação para o JavaScript são variados e cobrem um grande leque de especificações como: sistemas de tipos (\cite{Type_Analysis_for_JavaScript}, \cite{Towards_Type_Inference_for_JavaScript}, \cite{Understanding_TypeScript},  \cite{Fast_and_precise_hybrid_type_inference_for_JavaScript}, \cite{Depedent_Types_for_JavaScript}, \cite{Safe_&_Efficient_Gradual_Typing_for_TypeScript},  \cite{Type_Inference_for_Static_Compilation_of_JavaScript}), interpretadores abstratos (\cite{SAFE:Formal_Specification_and_Implementation_of_a_Scalable_Analysis_Framework_for_ECMAScript}, \cite{JSAI:a_static_analysis_platform_for_JavaScript}, \cite{Scalable_and_Precise_Static_Analysis_of_JavaScript_Applications_via_Loop-Sensitivity},  \cite{Combining_string_abstract_domains_for_JavaScript_analysis:an_evaluation)}), análises \emph{points-to} (\cite{Points-to_analysis_for_JavaScript}), lógicas de Hoare (\cite{Javert-2017}, \cite{Javert-2019}), semântica operacional (\cite{JSCert-2014}, \cite{KJS-2015}, \cite{JSExplain-2018}), representações intermédias e compiladores (\cite{Dynamic_property_caches:a_step_towards_faster_JavaScript_proxy_objects}). Em seguida, apresentamos os trabalhos relacionados mais relevantes para o projeto tese a ser desenvolvido, organizando-os numa linha temporal dividida nas Tabelas \ref{tab:related-work_timeline-1} e \ref{tab:related-work_timeline-2}. Esta linha temporal foca-se nos marcos mais importantes no trabalho de investigação focado na formalização da linguagem JavaScript desde a sua criação em 1995.
+
+
+
+% https://tex.stackexchange.com/a/196808
+\begin{table}[h!]
+\vspace{-2em}
+\renewcommand{\arraystretch}{1.8}
+
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}} >{\raggedright\arraybackslash}p{316pt}}
+  1995 & O JavaScript é lançado e implementado no Netscape Navigator 2.0 beta 3.\\
+  2005 & Thiemann apresenta uma primeira tentativa de definição de um sistema de tipos para JavaScript ~\cite{Thiemann-2005}. O sistema rastreia as possíveis características de um objeto e sinaliza conversões de tipos suspeitas. O trabalho realizado não cobre aspetos vitais do JavaScript, tal como herança baseada em protótipos, e não foi acompanhado por uma implementação na altura da sua publicação.\\
+  2008 & Maffeis et al. propõe uma primeira semântica operacional para a linguagem ECMAScript versão 3. (ES3)~\cite{operational_semantics_javascript-2008}. Esta semântica foi usada para analisar várias propriedades de segurança de aplicações web e mashups.\\
+  2010 & Guha et al.~\cite{essence_javascript-2010} definem a linguagem $\lambda$JS, um cálculo formal que  captura as características mais fundamentais do ES3. $\lambda$JS vem com um interpretador \emph{Racket}~\cite{Racket} e um tradutor de programas ES3 em expressões $\lambda$JS.\\
+  2012 & Gardner et al.~\cite{Gardner-2012} adapta ideias da lógica de separação para fornecer uma lógica de Hoare escalável para um subconjunto de JavaScript, com base em uma semântica operacional fiel ao ES3.\\
+  2012 & Politz et al.~\cite{Politz-2012} extende a linguagem $\lambda$JS do ES3 para o ES5 incluindo, pela primeira vez, uma semântica formal da JavaScript \texttt{property descriptors} e tratamento completo da declaração \texttt{eval}.\\
+  2014 & Bodin et al. apresenta o \emph{JSCert}~\cite{JSCert-2014}, uma formalização do standard ES5 escrito em \emph{Coq}~\cite{Coq}, e \emph{JSRef} um interpretador executável de referências extraido do \emph{Coq} para o \emph{OCaml}~\cite{OCaml}, provado correto em relação ao \emph{JSCert} e testado usando os testes da bateria Test262~\cite{Test262}.\\
+  2015 & Park et al. apresenta \emph{KJS}~\cite{KJS-2015}, a semântica formal do ES5 mais completa até à data. O \emph{KJS} foi desenvolvido usando a framework \emph{K}~\cite{Kframework}, um sistema consolidado de re-escrita de termos que suporta vários tipos de análise simbólica baseados em \emph{reachability logic} (All-Path Reachability Logic \cite{All-Path_Reachability_Logic}). \emph{KJS} foi testada cuidadosamente usando a bateria de testes, passando em todos os 2.782 testes do core da linguagem. O \emph{KJS} pode ser executado simbolicamente, podendo ser usado para análise formal e verificação de programas ES5.\\
+  2015 & Gardner et al. \cite{JSCert_1Year-2015}  estendem o projecto \emph{JSCert} para suportar \emph{arrays} ES5. Para tal, os autores ligam o \emph{JSRef} à implementação da biblioteca Array do motor V8 \cite{V8} da Google. Os autores adicionalmente avaliam o estado atual do projeto \emph{JSCert}, fornecendo uma análise detalhada da metodologia como um todo e uma análise detalhada dos testes que o projeto passa/falha.
+\end{tabular}
+\vspace{1em}
+\caption{Linha temporal que contém os trabalhos relacionados mais relevantes para os objetivos do projeto (1 of 2)}
+\label{tab:related-work_timeline-1}
+\end{table}
+\vspace{-2em}
+
+\begin{table}[h!]
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}} >{\raggedright\arraybackslash}p{316pt}}
+  
+  2017 & Fragoso Santos et al. cria a ferramenta \emph{JaVert}~\cite{Javert-2017}: uma ferramenta de verificação JavaScript que permite raciocínio semi-automático sobre as propriedades funcionais de correcção dos programas ES5. JaVert não assume qualquer simplificação da semântica da linguagem, analisando todos os \emph{corner-cases} da linguagem. A carga de anotações necessária é substancial.\\
+  2018 & Charguéraud et al. apresenta \emph{JSExplain}~\cite{JSExplain-2018}, um interpretador de referências para a linguagem ES5 que segue as especificações e que produz traços de execução inspecionáveis. Também inclui uma interface de inspeção de código que permite ao programador executar passo a passo o seu programa ES5 mas também o próprio código do interpretador ES5, enquanto executa os programas ES5.  \\
+  2020 & Sampaio et al. ~\cite{Javert-2020} estendem a ferramenta JaVerT para dar suporte ao raciocínio automático sobre eventos em JavaScript. Para tal, os autores desenvolvem diretamente em JavaScript uma implementação de referência de JavaScript promises. Os autores usam-na para testar a sua implementação de referência, passando 344 testes do total de 474 testes dedicados a JavaScript promises. Cerca de 106 testes foram excluídos devido a features ES6 que ainda não são suportadas e a testes que requerem o modo \emph{non-strict}.\\
+  2020 & Jihyeok Park et al. apresenta o JISET~\cite{JISET-2020} a primeira ferramenta que sintetiza automaticamente o analizador e que traduz AST-IR diretamente de uma especificação da linguagem dada.
+\end{tabular}
+\vspace{1em}
+\caption{Linha temporal que contém os trabalhos relacionados mais relevantes para os objetivos do projeto (2 of 2)}
+\label{tab:related-work_timeline-2}
+\end{table}
+
+
+
 \section{Design and Methodology}
 \label{sec:Design and Methodology}
 
 
 
-We recall that this thesis has two goals. Firstly, we want to improve \texttt{MetaData262 v0} in two ways: add support for missing metadata elements, and improve the infrastructure for the metadata computation, making the obtained metadata more reliable and the process faster and reproducible. Secondly, we want to create a visualisation system for easy selection of tests and display of test statistics.
+We recall that this thesis has two goals. Firstly, we want to improve \texttt{MetaData262 v0} in two ways: add support for missing metadata elements, and improve the infrastructure for the metadata computation, making the obtained metadata more reliable and the process faster and reproducible. Secondly, we want to create a visualization system for easy selection of tests and display of test statistics.
 
 
 \subsection{Improvements to MetaData262 v0}
@@ -441,9 +481,9 @@ We recall that this thesis has two goals. Firstly, we want to improve \texttt{Me
 The metadata calculated by \texttt{MetaData262 v0} is flawed in several ways: in the version calculation, in the built-in calculation, and in the harness calculation. We describe these flaws and how to fix them in more detail next.
 
 \begin{itemize}
-\item \emph{Version Calculation} - The version calculation is flawed in both the static and dynamic approachs, meaning that the hybrid approach that uses the results of the previous two will also be compromised. The static approach is flawed since the \texttt{Esprima} parser only fully supports up to \texttt{ECMAScript} version 7. Improvements can be made by finding a \texttt{JavaScript} parser that supports a later version of the standard. The dynamic approach's flaw lies in the way it works, since there is no JS engine that fully supports a version of the standard and only that one. To improve the dynamic approach we will add more JS engines. By adding more data points to the calculation, we will increase the reliability of the obtained metadata.
+\item \emph{Version Calculation} - The version calculation is flawed in both the static and dynamic approaches, meaning that the hybrid approach that uses the results of the previous two will also be compromised. The static approach is flawed since the \texttt{Esprima} parser only fully supports up to \texttt{ECMAScript} version 7. Improvements can be made by finding a \texttt{JavaScript} parser that supports a later version of the standard. The dynamic approach's flaw lies in the way it works, since there is no JS engine that fully supports a version of the standard and only that one. To improve the dynamic approach we will add more JS engines. By adding more data points to the calculation, we will increase the reliability of the obtained metadata.
 %
-\item \emph{Built-in Calculation} - The built-in calculation is also flawed in both the static and dynamic approachs. The static approach has the same flaw since it also uses \texttt{Esprima} as parser. Therefore the same improvement can be made by finding a newer parser. As for the dynamic approach, it is flawed due to the fact that only function calls are logged and therefore detected. If the properties of a built-in are changed directly then it will not be detected. For example if a test preforms \texttt{Array.prototype.pop = 3;} then the property \texttt{prototype} of the Array built-in will be changed even though no function call was made. This can not be detected by the current dynamic approach.
+\item \emph{Built-in Calculation} - The built-in calculation is also flawed in both the static and dynamic approaches. The static approach has the same flaw since it also uses \texttt{Esprima} as parser. Therefore the same improvement can be made by finding a newer parser. As for the dynamic approach, it is flawed due to the fact that only function calls are logged and therefore detected. If the properties of a built-in are changed directly then it will not be detected. For example if a test preforms \texttt{Array.prototype.pop = 3;} then the property \texttt{prototype} of the Array built-in will be changed even though no function call was made. This can not be detected by the current dynamic approach.
 %
 \item \emph{Harness Calculation} - The \texttt{harness} calculation is not done, including only the little information available in the \texttt{Frontmatter} of a few tests. This calculation can be improved by completing \texttt{includes} metadata and adding an additional \texttt{harness-functions} metadata. Both \texttt{includes} and \texttt{harness-functions} are mentioned in earlier sections, the first stores the files of the \texttt{harness} needed to run the test and the second will store the functions from those files that are actually used in the test.
 \end{itemize}
@@ -566,11 +606,11 @@ This web application will allow the user to view charts about the metadata of th
 % -- end-to-end tests -> testes do front-end
 
 % Para 1 --> components a serem testados
-The evaluation of this thesis will focus in its two main elemtents: the metadata calculation infrastructure and the \texttt{Metadata262 Visualization System}. The metadata calculation infrastructure will be evaluated for its precision and performance. As for the \texttt{Metadata262 Visualization System}, it will be evaluated for its reliability. Each createria of the evatuation will be described in more detail bellow.
+The evaluation of this thesis will focus in its two main elements: the metadata calculation infrastructure and the \texttt{Metadata262 Visualization System}. The metadata calculation infrastructure will be evaluated for its precision and performance. As for the \texttt{Metadata262 Visualization System}, it will be evaluated for its reliability. Each criteria of the evaluation will be described in more detail bellow.
 
 % Para 2 --> Metadata calculation precision  
 \paragraph{Evaluation of metadata calculation precision}
-The precision of the metadata calculated is very hard to access since the is no ground truth available. The version metadata calculated is being calculated for the first time. Thus, to evaluate the presition of the metadata calculation we will select a small random group of tests to analyze manually. A second evaluation will be made to the tests that have the biggest difference between the version calculated and the version that was the latest at the time the test was added to \texttt{Test262}. Firstly, we will find the date the tests were added to \texttt{Test262} and associate them with the latest \texttt{ECMAScript} version at that time. Afterwards, we will select the tests with the biggest discrepancy between the version assotiated and the version calculated. Finally we will preform a manual evaluation to ensure that the right version was calculated. Note that the version discrepancy is merely indicative, more the once tests were detected missing and subsequently added to complement \texttt{Test262}. These tests were added when they were detected missing and not when the version was released.
+The precision of the metadata calculated is very hard to access since the is no ground truth available. The version metadata calculated is being calculated for the first time. Thus, to evaluate the precision of the metadata calculation we will select a small random group of tests to analyze manually. A second evaluation will be made to the tests that have the biggest difference between the version calculated and the version that was the latest at the time the test was added to \texttt{Test262}. Firstly, we will find the date the tests were added to \texttt{Test262} and associate them with the latest \texttt{ECMAScript} version at that time. Afterwards, we will select the tests with the biggest discrepancy between the version associated and the version calculated. Finally we will preform a manual evaluation to ensure that the right version was calculated. Note that the version discrepancy is merely indicative, more the once tests were detected missing and subsequently added to complement \texttt{Test262}. These tests were added when they were detected missing and not when the version was released.
 
 
 
@@ -582,7 +622,7 @@ To evaluate performance improvements made to \texttt{MetaData262 v0} we will com
 
 % Para 4 --> visualization system
 \paragraph{Evaluation of the visualization system reliability}
-The visualization system evaluation will have three types of tests: unit tests, end-to-end tests and load tests. The unit tests will ensure the correctness of the system's results. The end-to-end tests will guarantee that the website interface works correctly. Finally, the load tests will allow us to estimate the amount of users that the systems can support, this way allowig us to estimate the resorces need.
+The visualization system evaluation will have three types of tests: unit tests, end-to-end tests and load tests. The unit tests will ensure the correctness of the system's results. The end-to-end tests will guarantee that the website interface works correctly. Finally, the load tests will allow us to estimate the amount of users that the systems can support, this way allowing us to estimate the resources need.
 
 
 
@@ -628,7 +668,7 @@ This task consists of concluding \texttt{MetaData262 v0} visualization system by
 
 
 \paragraph{Evaluation}
-This task consists of evaluating the results of the metadata generated. The most prone to error metadata calculation will be checked by hand in order to guarantee the correctness of the results presented. The development of the tests for the visualization system and the system itself will overlap durin the first two weeks of the evaluation. 
+This task consists of evaluating the results of the metadata generated. The most prone to error metadata calculation will be checked by hand in order to guarantee the correctness of the results presented. The development of the tests for the visualization system and the system itself will overlap during the first two weeks of the evaluation.
 
 
 \paragraph{Writing the thesis}
@@ -639,6 +679,10 @@ This last task will consist of reporting the execution of the previous tasks, by
 
 \section{Conclusion}
 \label{sec:Conclusion}
+With this thesis we will build an infrastructure that enables convenient access to metadata about the \texttt{Test262} conformance suite. We will improve upon the metadata calculation of \texttt{MetaData262 v0} as well as making it accessible to users via a web interface. This will enable \texttt{JavaScript} engine developers to filter tests easily, in particular developers of partial implementations. This will allow developers to find and correct errors quicker and will also enable a standardization of the selection of applicable tests for partial implementations.
+
+This report starts with a description of the background to this thesis, in particular the \texttt{ECMAScript} standard, the \texttt{Test262} conformance test suite and \texttt{MetaData262 v0}. Then, we present the scientific work done in the scope of the \texttt{JavaScript} language, with studies from 2005 to 2020. Then we have the design and methodology with a detailed description of the contributions this thesis will make. Finally, we have the methods we will use to evaluate the quality of the work done.
+
 
 
 %
