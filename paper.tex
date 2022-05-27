@@ -64,7 +64,7 @@ Tel: +351 218 417 000\\
 
 %
 \begin{abstract}
-The ECMAScript standard is the specification for JavaScript which is one of the most popular programming languages in the world. Implementing the standard is challenging in various ways, both due to its complexity and its scale. Test262 was created to alleviate the implementations difficulty by providing a conformance test suite that allows developers to test their implementations. There is the project MetaData262 v0 that calculates the metadata of the Test262 test suite. With this thesis, we will improve the MetaData262 v0 metadata calculations as well as build infrastructure to view the metadata through a web interface. The web interface will also allow to filter tests by some characteristics such as built-ins and version of the standard as well as display statistics of the metadata.
+The ECMAScript standard is the specification for JavaScript which is one of the most popular programming languages in the world. Implementing the standard is challenging in various ways, both due to its complexity and its scale. Test262 was created to alleviate the implementations difficulty by providing a conformance test suite that allows developers to test their implementations. Test262 has many tests and its hard to select the tests that belong to or need a feature in order to work, MetaData262 v0 was created to help with that. MetaData262 v0 calculates metadata of the tests in the Test262 test suite, making it available in MongoDB database. With this thesis, we will improve the MetaData262 v0 metadata calculations as well as build infrastructure to view the metadata through a web interface. The web interface will also allow to filter tests by some characteristics such as built-ins and version of the standard as well as display statistics of the metadata.
 
 \keywords{ECMAScript \and Specification Language \and Reference Interpreters \and Test262}
 \end{abstract}
@@ -81,6 +81,16 @@ The ECMAScript standard is the specification for JavaScript which is one of the 
 
 \section{Goals}
 \label{sec:Goals}
+
+
+This thesis has two main goals , the first is to improve \texttt{MetaData262 v0} and the second is to create a web visualization system to make the metadata more accessible. This way building the \texttt{MetaData262 Visualization System} that will allow its users to easily search the \texttt{Test262} metadata  filtering it by its characteristics.
+
+\paragraph{MetaData262 v0 improvements}
+This goal aims to improve \texttt{MetaData262 v0} in the precision and performance while making it more complete and scalable and easier to replicate.
+
+\paragraph{MetaData262 Visualization System}
+This goals aims to create a web platform to easily visualize the metadata calculated by \texttt{MetaData262 v0}. The system will provide filters with which a user will be able to filter the test by its characteristics. Then, the system will provide the filtered tests in various formats as well as useful statistics about the tests selected.
+
 
 \section{Background}
 \label{sec:Background}
@@ -315,7 +325,7 @@ As for the \texttt{harness-functions}, it provides important information about t
 
 
 % Para1 --> introduzir o trabalho do Miguel Trigo 
-This thesis continues the master thesis of Miguel Trigo\cite{Thesis_Miguel_Trigo}, in which he developed a preliminary version of \texttt{MetaData262}. More specifically, he built a MongoDB database storing the metadata of all Test262 tests, representing the metadata of each test as a JSON object.
+This thesis continues the master thesis of Miguel Trigo\cite{MetaDataV0}, in which he developed a preliminary version of \texttt{MetaData262}. More specifically, he built a MongoDB database storing the metadata of all Test262 tests, representing the metadata of each test as a JSON object.
 
 
 
@@ -409,45 +419,45 @@ The dynamic approach works by running the actual code of the test and logging th
 \section{Related Work}
 \label{sec:Related Work}
 
-Scientific studies about analysis of programs and techniques of instrumentation of JavaScript encompasses a varied range of specifications such as: type systems (\cite{Type_Analysis_for_JavaScript}, \cite{Towards_Type_Inference_for_JavaScript}, \cite{Understanding_TypeScript},  \cite{Fast_and_precise_hybrid_type_inference_for_JavaScript}, \cite{Depedent_Types_for_JavaScript}, \cite{Safe_&_Efficient_Gradual_Typing_for_TypeScript},  \cite{Type_Inference_for_Static_Compilation_of_JavaScript}), abstract interpreters (\cite{SAFE:Formal_Specification_and_Implementation_of_a_Scalable_Analysis_Framework_for_ECMAScript}, \cite{JSAI:a_static_analysis_platform_for_JavaScript}, \cite{Scalable_and_Precise_Static_Analysis_of_JavaScript_Applications_via_Loop-Sensitivity},  \cite{Combining_string_abstract_domains_for_JavaScript_analysis:an_evaluation)}), \emph{points-to} analysis (\cite{Points-to_analysis_for_JavaScript}), Hoare logic (\cite{Javert-2017}, \cite{Javert-2019}), operational semantics (\cite{JSCert-2014}, \cite{KJS-2015}, \cite{JSExplain-2018}), intermediate representations and compilers (\cite{Dynamic_property_caches:a_step_towards_faster_JavaScript_proxy_objects}). Next, we have the related work  most relevant for this thesis, it is organized into two Tables \ref{tab:related-work_timeline-1} and \ref{tab:related-work_timeline-2}. This time line focuses on the most important investigation work, focused on the JavaScript language specification since its creation in 1995.
+% Scientific studies about analysis of programs and techniques of instrumentation of JavaScript encompasses a varied range of specifications such as: type systems (\cite{Type_Analysis_for_JavaScript}, \cite{Towards_Type_Inference_for_JavaScript}, \cite{Understanding_TypeScript},  \cite{Fast_and_precise_hybrid_type_inference_for_JavaScript}, \cite{Depedent_Types_for_JavaScript}, \cite{Safe_&_Efficient_Gradual_Typing_for_TypeScript},  \cite{Type_Inference_for_Static_Compilation_of_JavaScript}), abstract interpreters (\cite{SAFE:Formal_Specification_and_Implementation_of_a_Scalable_Analysis_Framework_for_ECMAScript}, \cite{JSAI:a_static_analysis_platform_for_JavaScript}, \cite{Scalable_and_Precise_Static_Analysis_of_JavaScript_Applications_via_Loop-Sensitivity},  \cite{Combining_string_abstract_domains_for_JavaScript_analysis:an_evaluation)}), \emph{points-to} analysis (\cite{Points-to_analysis_for_JavaScript}), Hoare logic (\cite{Javert-2017}, \cite{Javert-2019}), operational semantics (\cite{JSCert-2014}, \cite{KJS-2015}, \cite{JSExplain-2018}), intermediate representations and compilers (\cite{Dynamic_property_caches:a_step_towards_faster_JavaScript_proxy_objects}). Next, we have the related work  most relevant for this thesis, it is organized into two Tables \ref{tab:related-work_timeline-1} and \ref{tab:related-work_timeline-2}. This time line focuses on the most important investigation work, focused on the JavaScript language specification since its creation in 1995.
 
 
-% https://tex.stackexchange.com/a/196808
-\begin{table}[h!]
-\vspace{-2em}
-\renewcommand{\arraystretch}{1.8}
+% % https://tex.stackexchange.com/a/196808
+% \begin{table}[h!]
+% \vspace{-2em}
+% \renewcommand{\arraystretch}{1.8}
 
-\begin{tabular}{@{\,}r <{\hskip 2pt} !{\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}} >{\raggedright\arraybackslash}p{316pt}}
-  1995 & JavaScript is launched and implemented in Netscape Navigator 2.0 beta 3.\\
-  2005 & Thiemann presents the first try at defining a system of types possible for JavaScript ~\cite{Thiemann-2005}. The system detects the possible characteristics of an object and signals suspected type conversions. The work done does not cover important aspects of JavaScript, such as inheritance based on prototypes, and was not created along with an implementation at the time of the publication.\\
-  2008 & Maffeis et al. proposes a first operational semantics for the language ECMAScript version 3. (ES3)~\cite{operational_semantics_javascript-2008}. This first semantics was used to analyze various properties of security of web applications.\\
-  2010 & Guha et al.~\cite{essence_javascript-2010} defines a language $\lambda$JS, a formal calculation that encapsulates the fundamental characteristics of ES3. $\lambda$JS comes along an interpreter \emph{Racket}~\cite{Racket} and a translator from ES3 programs to expressions $\lambda$JS.\\
-  2012 & Gardner et al.~\cite{Gardner-2012} adapts the logic ideas of separation to build a scalable Hoare logic for a subset of JavaScript, based of semantics faithful to ES3.\\
-\end{tabular}
-\vspace{1em}
-\caption{Time line that contains the most relevant related work to the objectives of the project (1 of 2)}
-\label{tab:related-work_timeline-1}
-\end{table}
-\vspace{-2em}
+% \begin{tabular}{@{\,}r <{\hskip 2pt} !{\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}} >{\raggedright\arraybackslash}p{316pt}}
+%   1995 & JavaScript is launched and implemented in Netscape Navigator 2.0 beta 3.\\
+%   2005 & Thiemann presents the first try at defining a system of types possible for JavaScript ~\cite{Thiemann-2005}. The system detects the possible characteristics of an object and signals suspected type conversions. The work done does not cover important aspects of JavaScript, such as inheritance based on prototypes, and was not created along with an implementation at the time of the publication.\\
+%   2008 & Maffeis et al. proposes a first operational semantics for the language ECMAScript version 3. (ES3)~\cite{operational_semantics_javascript-2008}. This first semantics was used to analyze various properties of security of web applications.\\
+%   2010 & Guha et al.~\cite{essence_javascript-2010} defines a language $\lambda$JS, a formal calculation that encapsulates the fundamental characteristics of ES3. $\lambda$JS comes along an interpreter \emph{Racket}~\cite{Racket} and a translator from ES3 programs to expressions $\lambda$JS.\\
+%   2012 & Gardner et al.~\cite{Gardner-2012} adapts the logic ideas of separation to build a scalable Hoare logic for a subset of JavaScript, based of semantics faithful to ES3.\\
+% \end{tabular}
+% \vspace{1em}
+% \caption{Time line that contains the most relevant related work to the objectives of the project (1 of 2)}
+% \label{tab:related-work_timeline-1}
+% \end{table}
+% \vspace{-2em}
 
-\begin{table}[ht!]
-\renewcommand{\arraystretch}{1.8}
-\begin{tabular}{@{\,}r <{\hskip 2pt} !{\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}} >{\raggedright\arraybackslash}p{316pt}}
+% \begin{table}[ht!]
+% \renewcommand{\arraystretch}{1.8}
+% \begin{tabular}{@{\,}r <{\hskip 2pt} !{\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}} >{\raggedright\arraybackslash}p{316pt}}
   
-  2012 & Politz et al.~\cite{Politz-2012} extends the language $\lambda$JS of ES3 to ES5 included, fir the first time, a formal semantics of JavaScript \texttt{property descriptors} and complete handling of the \texttt{eval} declaration.\\
-  2014 & Bodin et al. presents \emph{JSCert}~\cite{JSCert-2014}, a formalization of the ES5 standard written in \emph{Coq}~\cite{Coq}, and \emph{JSRef} an executable interpreter of references extracted from \emph{Coq} to \emph{OCaml}~\cite{OCaml}, proving correct when related to \emph{JSCert} and tested using the test suite Test262~\cite{Test262}.\\
-  2015 & Park et al. presents \emph{KJS}~\cite{KJS-2015}, a formal semantics for ES5, the most complete to that moment. The \emph{KJS}  was developed using the framework \emph{K}~\cite{Kframework}, a consolidated system of rewriting of terminology that supports various types of symbolic analyses based on \emph{reachability logic} (All-Path Reachability Logic \cite{All-Path_Reachability_Logic}). \emph{KJS} was tested carefully using the test suite, passing all the 2.782 tests of the language core. The \emph{KJS} can be executed symbolically, being able to be used for formal analyses and verification of ES5 programs.\\
-  2015 & Gardner et al. \cite{JSCert_1Year-2015} extend the project \emph{JSCert} to support \emph{arrays} ES5. In order to do this, the authors connected the \emph{JSRef} to the implementation of the Array library of the V8 engine \cite{V8} from Google. Additionally, the authors evaluated the state of the project \emph{JSCert} at the time, giving a detailed analysis of the methodology as a whole and a detailed analysis of the tests that the project passed or failed.\\
-  2017 & Fragoso Santos et al. creates the tool \emph{JaVert}~\cite{Javert-2017}: a tool for verifying JavaScript that allows semiautomatic reasoning about the fundamental properties of correctness of ES5 programs. JaVert does not assume any simplification of the language semantics, analyzing all the \emph{corner-cases} of the language. The load of necessary notation is substantial.\\
-  2018 & Charguéraud et al. presents \emph{JSExplain}~\cite{JSExplain-2018}, an reference interpreter for the ES5 language that follows the specifications and produces an inspectable execution traces. It also includes an interface of code inspection that allows the programmer to execute his ES5 code step by step as well as the code of the ES5 interpreter, while executing ES5 programs.\\
-  2020 & Sampaio et al. ~\cite{Javert-2020} extend the JaVerT tool to support automatic reasoning about JavaScript events. In order to do this, the authors developed a reference implementation of JavaScript promises directly in JavaScript. The authors used \colorbox{orange}{it} to test their reference implementation, passing 344 tests of the 474 total dedicated to JavaScript promises. Around 106 testes were excluded due to ES6 features that were not yet supported and to tests that require \emph{non-strict} mode.\\
-  2020 & Jihyeok Park et al. presents JISET~\cite{JISET-2020} the first tool that synthesizes automatically the analyzer and that translates AST-IR directly from a specification of a given language.
-\end{tabular}
-\vspace{1em}
-\caption{Time line that contains the most relevant related work to the objectives of the project (2 of 2)}
-\label{tab:related-work_timeline-2}
-\end{table}
-% QUESTION it e' Test262??
+%   2012 & Politz et al.~\cite{Politz-2012} extends the language $\lambda$JS of ES3 to ES5 included, fir the first time, a formal semantics of JavaScript \texttt{property descriptors} and complete handling of the \texttt{eval} declaration.\\
+%   2014 & Bodin et al. presents \emph{JSCert}~\cite{JSCert-2014}, a formalization of the ES5 standard written in \emph{Coq}~\cite{Coq}, and \emph{JSRef} an executable interpreter of references extracted from \emph{Coq} to \emph{OCaml}~\cite{OCaml}, proving correct when related to \emph{JSCert} and tested using the test suite Test262~\cite{Test262}.\\
+%   2015 & Park et al. presents \emph{KJS}~\cite{KJS-2015}, a formal semantics for ES5, the most complete to that moment. The \emph{KJS}  was developed using the framework \emph{K}~\cite{Kframework}, a consolidated system of rewriting of terminology that supports various types of symbolic analyses based on \emph{reachability logic} (All-Path Reachability Logic \cite{All-Path_Reachability_Logic}). \emph{KJS} was tested carefully using the test suite, passing all the 2.782 tests of the language core. The \emph{KJS} can be executed symbolically, being able to be used for formal analyses and verification of ES5 programs.\\
+%   2015 & Gardner et al. \cite{JSCert_1Year-2015} extend the project \emph{JSCert} to support \emph{arrays} ES5. In order to do this, the authors connected the \emph{JSRef} to the implementation of the Array library of the V8 engine \cite{V8} from Google. Additionally, the authors evaluated the state of the project \emph{JSCert} at the time, giving a detailed analysis of the methodology as a whole and a detailed analysis of the tests that the project passed or failed.\\
+%   2017 & Fragoso Santos et al. creates the tool \emph{JaVert}~\cite{Javert-2017}: a tool for verifying JavaScript that allows semiautomatic reasoning about the fundamental properties of correctness of ES5 programs. JaVert does not assume any simplification of the language semantics, analyzing all the \emph{corner-cases} of the language. The load of necessary notation is substantial.\\
+%   2018 & Charguéraud et al. presents \emph{JSExplain}~\cite{JSExplain-2018}, an reference interpreter for the ES5 language that follows the specifications and produces an inspectable execution traces. It also includes an interface of code inspection that allows the programmer to execute his ES5 code step by step as well as the code of the ES5 interpreter, while executing ES5 programs.\\
+%   2020 & Sampaio et al. ~\cite{Javert-2020} extend the JaVerT tool to support automatic reasoning about JavaScript events. In order to do this, the authors developed a reference implementation of JavaScript promises directly in JavaScript. The authors used \colorbox{orange}{it} to test their reference implementation, passing 344 tests of the 474 total dedicated to JavaScript promises. Around 106 testes were excluded due to ES6 features that were not yet supported and to tests that require \emph{non-strict} mode.\\
+%   2020 & Jihyeok Park et al. presents JISET~\cite{JISET-2020} the first tool that synthesizes automatically the analyzer and that translates AST-IR directly from a specification of a given language.
+% \end{tabular}
+% \vspace{1em}
+% \caption{Time line that contains the most relevant related work to the objectives of the project (2 of 2)}
+% \label{tab:related-work_timeline-2}
+% \end{table}
+% % QUESTION it e' Test262??
 
 
 \section{Design and Methodology}
