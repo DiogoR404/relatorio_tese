@@ -64,11 +64,11 @@ Tel: +351 218 417 000\\
 
 %
 \begin{abstract}
-The ECMAScript standard is the specification of the Java-Script language which is one of the most popular programming languages in the world. Implementing the ECMAScript standard is challenging in various ways, both due to its complexity and its scale. Test262 was created to alleviate this difficulty by providing a comprehensive test suite that allows developers to test their implementations. 
+The ECMAScript standard is the specification of the Java-Script language which is one of the most popular programming languages in the world. Implementing the ECMAScript standard is challenging in various ways, both due to its complexity and its scale. Test262 was created to alleviate this difficulty by providing a comprehensive test suite that allows developers to test their implementations.
 %
 However, Test262 does not come to a structured description of its tests, making it impossible to filter tests by the JavaScript features they target. The MetaData262 v0 system was created to help with this issue, providing a database containing the metadata of Test262 tests and a collection of scripts to compute that metadata.
 %
-With this thesis, we will improve MetaData262 v0 in two separate ways. First, we will re-engineer the system for metadata computation, making it more precise and performant and enriching the computed metadata with additional information. Second, we will develop a web interface for the visualization of Test262, allowing developers to easily filter tests by feature. 
+With this thesis, we will improve MetaData262 v0 in two separate ways. First, we will re-engineer the system for metadata computation, making it more precise and performant and enriching the computed metadata with additional information. Second, we will develop a web interface for the visualization of Test262, allowing developers to easily filter tests by feature.
 
 \keywords{ECMAScript \and Specification Language \and Reference Interpreters \and Test262}
 \end{abstract}
@@ -117,10 +117,10 @@ As described above, MetaData262 v1 will improve MetaData262 v0 in the following 
 \begin{itemize}
 \item \emph{Better Precision:} MetaData262 v0 computes for each test the version to which the test belongs and the built-in objects with which the test interacts. Unfortunately, this computation is far from precise as it relies on the specific implementations of JavaScript engines. For instance, MetaData262 v0 determines that a test is meant for version 5 if a JS engine implementing version 5 passes the test. Naturally, this approach is not error-free since it is never the case that a JS engine implements one and only one version of the language fully. To improve precision, we will build a dedicated infrastructure to streamline the addition of new JavaScript engines to our metadata computation pipeline and use this new infrastructure to compute a new version of the metadata.
 %
-\item \emph{Better Performance} As said before, the metadata computation pipeline of MetaData262 v0 requires running various JS engines on each test of Test262. This is extremely time consuming given the high number of tests contained in Test262 (around 40K). 
+\item \emph{Better Performance} As said before, the metadata computation pipeline of MetaData262 v0 requires running various JS engines on each test of Test262. This is extremely time consuming given the high number of tests contained in Test262 (around 40K).
 Currently this is done sequentially. To improve on this situation, we will associate each JavaScript engine with a docker container and run the docker containers in parallel. With docker containers running in parallel the scalability and performance of \texttt{MetaData262 v1} will improve. In addiction to that, the JavaScript engines being associated with docker containers will also make \texttt{MetaData262 v1} easier to replicate.
 %
-\item \emph{More information:} We will extend the computed metadata of each test with additional information. In particular, we plan to associate with each test: (1) the date in  which the test was introduced and (2) the harness files and functions that the test uses. Basically, the Test262 harness is a set of files that contain auxiliary functions used by Test262 tests, such as assert and assertEquals. 
+\item \emph{More information:} We will extend the computed metadata of each test with additional information. In particular, we plan to associate with each test: (1) the date in  which the test was introduced and (2) the harness files and functions that the test uses. Basically, the Test262 harness is a set of files that contain auxiliary functions used by Test262 tests, such as assert and assertEquals.
 \end{itemize}
 
 
@@ -130,7 +130,7 @@ We have already developed a prototype of MetaData262Viz built with Node.js~\cite
 
 
 % Para 6 --> resumo do resto do relatorio
-This document is structured in the following way. Section \ref{sec:Goals} has the objectives of this thesis. Section \ref{sec:Background} gives an overview of the field of the thesis, describing the \texttt{ECMAScript} standard, the \texttt{Test262} test suite, and the project \texttt{MetaData262 v0}. Next, Section \ref{sec:Related Work} presents the scientific work done that relates to this thesis topic. Section \ref{sec:Design and Methodology} presents the design and methodology that will be be followed in this thesis. As for Section \ref{sec:Evaluation and Planning}, it describes how we plan to evaluate the results of this thesis as well as its timeline. Finally, Section \ref{sec:Conclusion} presents the main conclusions and a summary of this proposal. 
+This document is structured in the following way. Section \ref{sec:Goals} has the objectives of this thesis. Section \ref{sec:Background} gives an overview of the field of the thesis, describing the \texttt{ECMAScript} standard, the \texttt{Test262} test suite, and the project \texttt{MetaData262 v0}. Next, Section \ref{sec:Related Work} presents the scientific work done that relates to this thesis topic. Section \ref{sec:Design and Methodology} presents the design and methodology that will be be followed in this thesis. As for Section \ref{sec:Evaluation and Planning}, it describes how we plan to evaluate the results of this thesis as well as its timeline. Finally, Section \ref{sec:Conclusion} presents the main conclusions and a summary of this proposal.
 
 
 
@@ -169,7 +169,7 @@ This chapter provides an overview on the ECMAScript standard, the Test262 that a
 %    um interpretador de JS tem de executar ao avaliar qualquer
 %    statement da linguagem
 % Falar sobre o comité -  quem controla a evolucao do ECMAScript
-ECMAScript standard is the official document, written in the English language, in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version. 
+ECMAScript standard is the official document, written in the English language, in which the JavaScript language is defined. This document is in constant evolution, being updated by the ECMA Technical Committee 39 (TC39), which is responsible for maintaining the standard. The standard is currently in its twelfth version.
 %
 The standard specifies the \texttt{JavaScript} language, to ensure its multiple compilers and interpreters implementations are coherent. Some of the \texttt{JavaScript} compilers are the Hop~\cite{Hop} and the JSC~\cite{JSC} compilers, the most popular interpreters are Node.js and SpiderMonkey~\cite{SpiderMonkey}. These are only four implementations among many others, which come along with the many use cases that \texttt{JavaScript} has.
 %
@@ -282,14 +282,14 @@ Figure \ref{fig:LengthOfArrayLike} shows a snippet of the ECMAScript standard de
 % linguagem contra o standard
 % Esta bateria de testes é dificil de manter
 % Porque? - muitos testes, muitas features, em geral ha retrocompatibilidade mas ha um pequeno numero de casos onde a retrocompatibilidade nao se verifica -> os testes de ser modificados
-Implementing a \texttt{JavaScript} engine is particularly difficult since it involves dealing with the many corner cases that exist in the language. To test that corner cases are correctly dealt with there is \texttt{Test262}, the ECMAScript standard test battery. Although, \texttt{Test262} is vital to the \texttt{JavaScript} engines, it is very hard to maintain due it's complexity, the total number of tests is around 40000 divided into 87 subfolders, each correspond to roughly one section of the standard. \texttt{Test262} complexity grows with changes to the standard since in most cases backward compatible is maintained except for a few select cases. 
+Implementing a \texttt{JavaScript} engine is particularly difficult since it involves dealing with the many corner cases that exist in the language. To test that corner cases are correctly dealt with there is \texttt{Test262}, the ECMAScript standard test battery. Although, \texttt{Test262} is vital to the \texttt{JavaScript} engines, it is very hard to maintain due it's complexity, the total number of tests is around 40000 divided into 87 subfolders, each correspond to roughly one section of the standard. \texttt{Test262} complexity grows with changes to the standard since in most cases backward compatible is maintained except for a few select cases.
 % 87 subfolders on built-ins + language
 % QUESTION round number? (40000)
 % QUESTION 105 subfolders if add intl402 (which also has files that were ignore)
 
 
 
-% Implementacoes parciais da linguagem 
+% Implementacoes parciais da linguagem
 % Na acadamia é normal desenvolverem-se implementacoes parciais da linguagem: não suportam a ultima versao, não suportam todos os objectos built-in, não suportam todas
 % Pergunta: Quais é que são os testes apropriados?
 % Normal: Respostas ad-hoc -> sem justificação rigorosa -> basicamente cada paper selecciona os testes que lhe da jeito
@@ -340,8 +340,8 @@ The \texttt{Frontmatter} has keywords to hold metadata of the test. These keywor
 \end{itemize}
 
 
-% Varias observacoes: 
-%  - A metada esta muitas vezes INCOMPLETA e algumas vezes incorrecta 
+% Varias observacoes:
+%  - A metada esta muitas vezes INCOMPLETA e algumas vezes incorrecta
 %  - é preciso calcular a metadata certa
 As Figure 5 illustrates, it is often the case that the metadata of a test is incomplete. Some tests also have the wrong metadata. As part of this thesis, we plan to process all the tests to check and correct their corresponding metadata as well as completing the metadata that is missing.
 
@@ -377,7 +377,7 @@ As for the \texttt{harness-functions}, it provides important information about t
 
 
 
-% Para1 --> introduzir o trabalho do Miguel Trigo 
+% Para1 --> introduzir o trabalho do Miguel Trigo
 This thesis continues the master thesis of Miguel Trigo\cite{MetaDataV0}, in which he developed a preliminary version of \texttt{MetaData262}. More specifically, he built a MongoDB database storing the metadata of all Test262 tests, representing the metadata of each test as a JSON object.
 
 
@@ -392,9 +392,9 @@ Besides the existing metadata properties, various new properties were added to \
 The location group contains information about the path to the test inside the \texttt{Test262}. It consists of the properties \texttt{path}, storing the relative path to the test starting at the root of the \texttt{Test262} project, and splitPath, storing the array obtained by splitting the \texttt{path} string into its corresponding folders.
 
 
-% Para 2.2 [extra front matter: syntactic constructs, built-ins, version] 
+% Para 2.2 [extra front matter: syntactic constructs, built-ins, version]
 \paragraph{Extra front matter group}
-The extra front matter group contains new metadata generated for \texttt{MetaData262 v0}. The new metadata generated is associated with the properties: \texttt{syntactic\_constructs}, \texttt{version}, and \texttt{builtIns} that were mentioned in the previous section as important metadata to add. The property \texttt{version} stores the \texttt{ECMAScript} standard version the test belongs to. The property \texttt{syntactic\_construct} stores an array with all the syntactic constructions that the test contains. As for \texttt{builtIns}, it stores all the built-ins that the test interacts with, mapping each built-in to its fields and methods used by test. 
+The extra front matter group contains new metadata generated for \texttt{MetaData262 v0}. The new metadata generated is associated with the properties: \texttt{syntactic\_constructs}, \texttt{version}, and \texttt{builtIns} that were mentioned in the previous section as important metadata to add. The property \texttt{version} stores the \texttt{ECMAScript} standard version the test belongs to. The property \texttt{syntactic\_construct} stores an array with all the syntactic constructions that the test contains. As for \texttt{builtIns}, it stores all the built-ins that the test interacts with, mapping each built-in to its fields and methods used by test.
 
 
 % Para 2.3 [statistics]
@@ -406,8 +406,8 @@ Finally, the statistics group contains some statistical data about the tests. It
 \subsubsection{Example}
 
 % Para3 --> exemplo da MetaData262 v0
-Figure \ref{fig:json_metadata} shows the JSON object storing the metadata generated from the Test262 test given in Figure \ref{fig:Test262_example}. 
-% Observacoes sobre o exemplo 
+Figure \ref{fig:json_metadata} shows the JSON object storing the metadata generated from the Test262 test given in Figure \ref{fig:Test262_example}.
+% Observacoes sobre o exemplo
 The JSON object begins with the \texttt{path} property storing the path to the test at hand. After, the \texttt{version} property indicates that this test belongs to the fifth version of the standard. If \texttt{MetaData262 v0} was not able to compute the version of the test, this field is omitted. Next, we have the properties corresponding to the test's \texttt{Frontmatter} (note that the deprecated \texttt{es5id} is replaced to the \texttt{esid} property).
 % ignorar as propriedades buit-ins e Array
 Next we have the \texttt{static\_constructs} property that holds an array with the syntactic constructors of the test. The \texttt{builtIns} property holds a JSON object, in which, each property corresponds to a built-in mapped to its functions and fields that are interacted with in the test. Finally, we have the statistics group of properties. The \texttt{asserts} property indicates that this test uses one assert statement. The \texttt{error} holds the numeric value zero since this test uses no error functions of \texttt{Test262}. The \texttt{esprima} property indicates this test is supported by \texttt{Esprima}. Finally, the \texttt{lines} property indicates that this test has 3 lines of code. Note that the example in Figure \ref{fig:Test262_example} splits the last line of the test in order to improve the readability of the figure hence only 3 lines are counted in the actual test).
@@ -424,11 +424,11 @@ Next we have the \texttt{static\_constructs} property that holds an array with t
 
 \subsubsection{Metadata Computation}
 
-% Para4 --> a metada original em falta teve de ser calculada e os 
-% // bem como os novos campos da metadata -> 
+% Para4 --> a metada original em falta teve de ser calculada e os
+% // bem como os novos campos da metadata ->
 As part of the setting up of MetaData262 v0,  M. Trigo had to compute the missing \texttt{Frontmatter} properties as well as the values of the new properties that he introduced. In most cases, the computation was straightforward, only involving a simple syntactic analysis of each test. However, the computation of the version and the built-ins used in each test was more involved. We will go through this process in more detail below.
 
-% Para5 --> Version Computation 
+% Para5 --> Version Computation
 \paragraph{Calculation of Version metadata}
 The \texttt{version} of the standard a test belongs to is calculated using 3 different approaches: dynamic, static, and hybrid.Below we give a brief overview of each method:
 
@@ -439,7 +439,7 @@ The dynamic approach is based on the waterfall model, running the tests in vario
   \item \emph{Static Approach:}
 The static approach determines the version of a test by analyzing the static keywords of the test. Essentially, a test is labeled with the version corresponding to the keyword with the latest associated version; formally:
 \[version(test) = max \{ version(keyword) | keyword \in test \} \]
-For instance, if a test contains two keywords introduced in versions 6 and 8, then the test will belong to the version 8 of the standard. \texttt{MetaData262 v0} implements the static approach in the following way. It maintains an internal map associating each keyword with the version in which it was introduced. Given a test to be labeled, \texttt{MetaData262 v0} first computes the AST of the test using the \texttt{Esprima} parser and then traverses the AST to obtain all the keywords used in the test. Finally, it labels the test with the version of the latest keyword (as discussed above). 
+For instance, if a test contains two keywords introduced in versions 6 and 8, then the test will belong to the version 8 of the standard. \texttt{MetaData262 v0} implements the static approach in the following way. It maintains an internal map associating each keyword with the version in which it was introduced. Given a test to be labeled, \texttt{MetaData262 v0} first computes the AST of the test using the \texttt{Esprima} parser and then traverses the AST to obtain all the keywords used in the test. Finally, it labels the test with the version of the latest keyword (as discussed above).
 %
   \item \emph{Hybrid Approach:}
 The hybrid approach is calculated using the results of the dynamic and static approaches. The hybrid approach merges the results by maintaining the higher version detected between each approach for each test. For instance, if the dynamic approach's result for a test is version 6 and the static's result for the same test is version 8, then, the test is labeled as belonging to version 8 of the standard according to the hybrid approach.
@@ -455,16 +455,16 @@ The hybrid approach is calculated using the results of the dynamic and static ap
 
 
 
-% Para6 --> Built-in Computation 
+% Para6 --> Built-in Computation
 \paragraph{Calculation of built-ins metadata}
 The \texttt{built-ins} used by each test are calculated using two separate approaches: dynamic and static. As in the calculation of the \texttt{ECMAScript} version both approaches are combined to improve the results. Below, we describe each approach separately:
 
 \begin{itemize}
   \item \emph{Static Approach:}
-The static approach maintains an internal map associating each built-in method and property with the name of the corresponding  built-in object (e.g. the method hasOwnProperty is associated with the built-in object \texttt{Object}). The static approach first computes the AST of the test using \texttt{Esprima} and then traverses the AST checking for each method and property for the built-in object it is associated with. In the end, it outputs a JSON object mapping each built-in object to an array with the names of its methods and properties that the test uses. 
+The static approach maintains an internal map associating each built-in method and property with the name of the corresponding  built-in object (e.g. the method hasOwnProperty is associated with the built-in object \texttt{Object}). The static approach first computes the AST of the test using \texttt{Esprima} and then traverses the AST checking for each method and property for the built-in object it is associated with. In the end, it outputs a JSON object mapping each built-in object to an array with the names of its methods and properties that the test uses.
 %
   \item \emph{Dynamic Approach:}
-The dynamic approach works by running the actual code of the test and logging the interactions of the test with the JavaScript built-ins. To this end, \texttt{MetaData262 v0} wraps the methods of every built-in object in an auxiliary function that calls the corresponding methods and adds an entry to the log registering that call. Finally, \texttt{MetaData262 v0} analyses the log information to determine the built-in methods used by the test. 
+The dynamic approach works by running the actual code of the test and logging the interactions of the test with the JavaScript built-ins. To this end, \texttt{MetaData262 v0} wraps the methods of every built-in object in an auxiliary function that calls the corresponding methods and adds an entry to the log registering that call. Finally, \texttt{MetaData262 v0} analyses the log information to determine the built-in methods used by the test.
 \end{itemize}
 
 
@@ -474,11 +474,11 @@ The dynamic approach works by running the actual code of the test and logging th
 
 There is a wide range of scientific studies on program analysis for JavaScript, including: type systems (\cite{Type_Analysis_for_JavaScript}, \cite{Towards_Type_Inference_for_JavaScript}, \cite{Understanding_TypeScript},  \cite{Fast_and_precise_hybrid_type_inference_for_JavaScript}, \cite{Depedent_Types_for_JavaScript}, \cite{Safe_&_Efficient_Gradual_Typing_for_TypeScript},  \cite{Type_Inference_for_Static_Compilation_of_JavaScript}), abstract interpreters (\cite{SAFE:Formal_Specification_and_Implementation_of_a_Scalable_Analysis_Framework_for_ECMAScript}, \cite{JSAI:a_static_analysis_platform_for_JavaScript}, \cite{Scalable_and_Precise_Static_Analysis_of_JavaScript_Applications_via_Loop-Sensitivity},  \cite{Combining_string_abstract_domains_for_JavaScript_analysis:an_evaluation)}), \emph{points-to} analysis (\cite{Points-to_analysis_for_JavaScript}), Hoare logic (\cite{Javert-2017}, \cite{Javert-2019}), operational semantics (\cite{JSCert-2014}, \cite{KJS-2015}, \cite{JSExplain-2018}), intermediate representations and compilers (\cite{Dynamic_property_caches:a_step_towards_faster_JavaScript_proxy_objects}). Here, we focus only on the related work most relevant for this thesis, covering all the most relevant academic efforts in modelling the JavaScript semantics.
 
-One of the first formal semantics of the JS language was presented by Thiemann~\cite{Thiemann-2005} as part of his work on defining a type system for JavaScript. Thiemann's semantics targets the third version of the language and is specified in small-step style. Importantly, this semantics ignores a number of important features of the JavaScript language, such as implicit type coercion, the treatment of global variables, and the non-strict mode. 
+One of the first formal semantics of the JS language was presented by Thiemann~\cite{Thiemann-2005} as part of his work on defining a type system for JavaScript. Thiemann's semantics targets the third version of the language and is specified in small-step style. Importantly, this semantics ignores a number of important features of the JavaScript language, such as implicit type coercion, the treatment of global variables, and the non-strict mode.
 
-In 2008, Maffeis et al. proposed the first operational semantics for a significant subset of ECMAScript~\cite{operational_semantics_javascript-2008}. They target the 3rd version of the language. This semantics was formalized in big-step style and comprises a large collection of rules. Unfortunately, the semantics has not been automated, meaning that it cannot be tested. Nevertheless, the authors use the proposed semantics to reason about various security properties of JS web applications. 
+In 2008, Maffeis et al. proposed the first operational semantics for a significant subset of ECMAScript~\cite{operational_semantics_javascript-2008}. They target the 3rd version of the language. This semantics was formalized in big-step style and comprises a large collection of rules. Unfortunately, the semantics has not been automated, meaning that it cannot be tested. Nevertheless, the authors use the proposed semantics to reason about various security properties of JS web applications.
 
-In 2010, Guha et al define lambdaJS~\cite{essence_javascript-2010}, a lambda calculus to be used as a compilation target for JavaScript. The authors claim that lambdaJS capture the fundamental behavior of the JS language. The authors also define a desugaring function that compiles ES 3 programs to lambdaJS and implement a lambdaJS interpreter in Racket. However, the authors do not test their infrastructure against Test262. In order to test this work against Test262, one would have to compile all Test262 tests to lambdaJS and then run the compiled test suite using the lambdaJS interpreter. Importantly, the lambdaJS infrastructure does not support the entire ES3 standard. Hence, if one was to test the proposed infrastructure, one would first have to clearly define the target subset of ES3 and filter the appropriate tests from Test262. Later, the same authors propose S5~\cite{Politz-2012}, an extension of lambdaJS to the 5th version of the standard. In contrast to lambdaJS, which the authors did not test, the authors do test S5, running it against Test262. They pass a total of 8157 tests out of a total of 11606 tests (approx. 70\%). However, the authors admit that they do not implement the whole language, stating that they only implement 60\% of the built-in objects. Nevertheless, they were not able to filter the tests appropriately to include only the tests with the features that they do implement. This means that they might have bugs in features that they implement that were disregarded as being caused by unimplemented features. Without an appropriate labeling of the tests, the only way of guaranteeing that they are not failing tests that they should be passing is to analyze all failing tests manually, which the authors do not do. 
+In 2010, Guha et al define lambdaJS~\cite{essence_javascript-2010}, a lambda calculus to be used as a compilation target for JavaScript. The authors claim that lambdaJS capture the fundamental behavior of the JS language. The authors also define a desugaring function that compiles ES 3 programs to lambdaJS and implement a lambdaJS interpreter in Racket. However, the authors do not test their infrastructure against Test262. In order to test this work against Test262, one would have to compile all Test262 tests to lambdaJS and then run the compiled test suite using the lambdaJS interpreter. Importantly, the lambdaJS infrastructure does not support the entire ES3 standard. Hence, if one was to test the proposed infrastructure, one would first have to clearly define the target subset of ES3 and filter the appropriate tests from Test262. Later, the same authors propose S5~\cite{Politz-2012}, an extension of lambdaJS to the 5th version of the standard. In contrast to lambdaJS, which the authors did not test, the authors do test S5, running it against Test262. They pass a total of 8157 tests out of a total of 11606 tests (approx. 70\%). However, the authors admit that they do not implement the whole language, stating that they only implement 60\% of the built-in objects. Nevertheless, they were not able to filter the tests appropriately to include only the tests with the features that they do implement. This means that they might have bugs in features that they implement that were disregarded as being caused by unimplemented features. Without an appropriate labeling of the tests, the only way of guaranteeing that they are not failing tests that they should be passing is to analyze all failing tests manually, which the authors do not do.
 
 In 2014, Bodin et al. present JSCert~\cite{JSCert-2014} a formal semantics of JavaScript implemented in the Coq proof assistant~\cite{Coq}. JSCert targets the 5th version of the standard and is written in pretty-big-step style~\cite{Arthur-Chargueraud_ESOP_2013}. Besides the semantics, the authors also implement a JS interpreter in Coq~\cite{Coq} called JSRef. They prove that JSRef is correct with respect to JSCert and use the extraction mechanism of Coq to obtain an executable version of JSRef in OCaml~\cite{OCaml}. Using the OCaml version of JSRef, the authors were able to test JSCert/JSRef against Test262. JSRef passes 1796 tests out of a total 2782 tests for the core language. Note that the tests for the core language include all the test that do not explicitly target the built-in objects. Given that JSCert models the entire core language, the following question naturally arises: how come does JSCert fail around 35\% of the tests targeting the core language? The answer is simple: many tests targeting the core language interact with built-in objects, such as arrays, strings, the methods of the Object object, the methods of the Math object etc. Again, the authors were not able to automatically filter the Test262 tests for the tests that do not make use of built-in objects.
 %
@@ -503,19 +503,19 @@ We recall that this thesis has two goals. Firstly, we want to improve MetaData26
 \label{sub:improvements_to_metadata262_v0}
 
 
-% Para1 --> problemas do calculo da metada existente na Metadata262 v0. 
-% --> as versoes estao mal calculadas porque nao existem JS engines 
-% que implementem exactamente uma versao e so essa versao 
-% --> versoes calculadas em instalacoes ad-hoc 
-% -- é preciso melhorar a analise dinamica considerando mais JS engines 
-% --> os built-ins tb estao mal calculados porque a analise dinamica 
-% dos built-ins ignora propriedades -> so considera chamadas a funcoes 
-% por isso, se um teste for apenas: Array.prototype.pop = 3; 
-% nao vai ser identificado como um teste que usa o array pela analise 
-% dinamica 
-% --> ha informacao em falta 
+% Para1 --> problemas do calculo da metada existente na Metadata262 v0.
+% --> as versoes estao mal calculadas porque nao existem JS engines
+% que implementem exactamente uma versao e so essa versao
+% --> versoes calculadas em instalacoes ad-hoc
+% -- é preciso melhorar a analise dinamica considerando mais JS engines
+% --> os built-ins tb estao mal calculados porque a analise dinamica
+% dos built-ins ignora propriedades -> so considera chamadas a funcoes
+% por isso, se um teste for apenas: Array.prototype.pop = 3;
+% nao vai ser identificado como um teste que usa o array pela analise
+% dinamica
+% --> ha informacao em falta
 % ficheiros da harness e funcoes da harness
-% data de criação do teste 
+% data de criação do teste
 The metadata calculated by \texttt{MetaData262 v0} is flawed in several ways: in the version calculation, in the built-in calculation, and in the harness calculation. We describe these flaws and how to fix them in more detail next.
 
 \begin{itemize}
@@ -528,14 +528,14 @@ The metadata calculated by \texttt{MetaData262 v0} is flawed in several ways: in
 
 
 % Para 2 --> Scalability/Performance and Replicability of the calculation
-% 5.1 - Precise Metadata for test262 tests 
-% --> calcular a metadata precisamente e de forma facilmente reproducible 
-% 5.1.1 versao -> 
-% Montar um sistema escalavel para o calculo das versoes 
-% associamos a cada versao um numero arbitrario de docker images cada uma 
-% com um JS engine supostamente dessa versao 
+% 5.1 - Precise Metadata for test262 tests
+% --> calcular a metadata precisamente e de forma facilmente reproducible
+% 5.1.1 versao ->
+% Montar um sistema escalavel para o calculo das versoes
+% associamos a cada versao um numero arbitrario de docker images cada uma
+% com um JS engine supostamente dessa versao
 % ---> parelelizacao etc
-% 5.1.2 built-ins -> melhorar a instrumentcao para o calculo dinamico dos 
+% 5.1.2 built-ins -> melhorar a instrumentcao para o calculo dinamico dos
 % built-ins --> em particular, apanhar property look-ups dinamicamente
 An important contribution of this thesis is the set up of an automated infrastructure for the computation of the metadata. As discussed above, the dynamic computation of the ES version of each test, requires running various versions of multiple JS engines. So far, in order to do so, these engines must be installed in the local machine running the dynamic-version-computation script. This is impractical as we consider a larger number of engines. To ameliorate this issue, we plan to use docker containers, assigning a docker container to each version and making all the containers available as part of our metadata computation infrastructure. This architecture will enable us to parallelize the work of the dynamic approaches by multiplying the docker containers that run the JS engines. This parallelization will allow scalability because otherwise since the duration to calculate the version with the dynamic approach will scale linearly with the amount of engines per standard version being used. Docker containers will not only improve the performance but also allow MetaData262 to be replicated in an easier way since it requires a smaller configuration effort to replicate the \texttt{MetaData} calculation.
 
@@ -543,23 +543,23 @@ An important contribution of this thesis is the set up of an automated infrastru
 \subsection{MetaData262Viz}
 \label{sub:metadata262_visualization_system}
 
-% --> Problemas de acesso a metadata e obtencao de informacao estatistica 
-% sobre os testes 
-% --> neste momento quem quiser obter informacao estatisca sobre os 
-% testes tem de interagir com uma base de dados Mongo e depois processar a informacao 
+% --> Problemas de acesso a metadata e obtencao de informacao estatistica
+% sobre os testes
+% --> neste momento quem quiser obter informacao estatisca sobre os
+% testes tem de interagir com uma base de dados Mongo e depois processar a informacao
 % como entender
 % O objectivo desta tese é resolver estes dois problemas.
 
 % Para 0 --> Motivar a criacao do system de visualizacao
 The \texttt{MetaData262Viz} appears to ease the barrier to access the \texttt{MetaData262 v0} information and statistics. Right now the metadata is hosted in a MongoDB database leading to the need to have knowledge of MongoDB to get the information. After getting the information there would most likely be a need to process that metadata and maybe even generating charts to provide statistics. This visualization system will make this process much easier.
 
-% 5.2 - MetaData Visualisation System 
-% portal para visualizacao da metadata dos testes + informacao estatisca sobre os testes 
-% --> gerar automaticamente 
+% 5.2 - MetaData Visualisation System
+% portal para visualizacao da metadata dos testes + informacao estatisca sobre os testes
+% --> gerar automaticamente
 % --> print screens do que ja fez
-% --> discussao das bibliotecas que vai considera usar para criacao e display 
+% --> discussao das bibliotecas que vai considera usar para criacao e display
 % da informacao estatisca
-% --> Exemplos de graficos a gerar 
+% --> Exemplos de graficos a gerar
 % -- ...
 
 % Para 1 --> O que o website vai mostrar e o que para isso e' necessario fazer
@@ -581,7 +581,7 @@ The information part of the image contains the result of the query. The informat
 % QUESTION mudar o titulo do website para MetaData262 Visualization System ??
 
 
-% printscreens do site 
+% printscreens do site
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{images/website.png}
@@ -609,7 +609,7 @@ In order to generate such graphs in real time, we are considering two libraries:
 \item \emph{Victory\cite{Victory} -} This library focuses on chart generation. Victory has a total of 34 components directly related to chart generation. Victory is also open-source and one of the most popular chart libraries for React.
 \end{itemize}
 
-So far, we are more inclined to use Victory because because we only need the Chart components. Victory is also one of the most popular chart libraries with a big community which might be a big advantage if implementation difficulties arise. 
+So far, we are more inclined to use Victory because because we only need the Chart components. Victory is also one of the most popular chart libraries with a big community which might be a big advantage if implementation difficulties arise.
 
 
 \begin{figure}
@@ -637,28 +637,28 @@ So far, we are more inclined to use Victory because because we only need the Cha
 \label{sec:Evaluation and Planning}
 
 
-% Evaluation 
-% - Discutimos avaliação das duas componentes do projecto 
+% Evaluation
+% - Discutimos avaliação das duas componentes do projecto
 
 % Componente 1 -> sistema para calculo da metadata
 % É muito difícil de avaliar porque não há ground truth -> nós não sabemos qual é a versão dos testes
-% - vamos seleccionar um conjunto aleatório de testes e analisa-los à mão comparando a versão calculada com a versão que sabemos ser a versão do teste 
-% - vamos tb determinar a versão utilizando à data em que o teste foi inserido na Test262 -> pela data sabemos a versão corrente -> vamos olhar particularmente para os testes em que a versão calculada difere da versão da data dos testes 
+% - vamos seleccionar um conjunto aleatório de testes e analisa-los à mão comparando a versão calculada com a versão que sabemos ser a versão do teste
+% - vamos tb determinar a versão utilizando à data em que o teste foi inserido na Test262 -> pela data sabemos a versão corrente -> vamos olhar particularmente para os testes em que a versão calculada difere da versão da data dos testes
 % -> Atenção que a versão à data do teste não é necessariamente a versão do teste -> mas dá uma indicação
 % --> testes analisados manualmente são os testes para os quais há grandes discrepâncias entre a versão à data do teste e a versão calculada para o teste
 
 % Componente 2 -> sistema de visualisacao
-% -- testes unitários para testar as funcionalidades base da aplicação 
+% -- testes unitários para testar as funcionalidades base da aplicação
 % -- end-to-end tests -> testes do front-end
 
 % Para 1 --> components a serem testados
 The evaluation of this thesis will focus on its two main elements: the metadata calculation infrastructure and the \texttt{MetaData262Viz}. The metadata calculation infrastructure will be evaluated with respect to its precision and performance. As for the \texttt{MetaData262Viz}, it will be evaluated for its reliability. The evaluation criteria will be described in more detail bellow.
 
-% Para 2 --> Metadata calculation precision  
+% Para 2 --> Metadata calculation precision
 \paragraph{Metadata calculation precision}
-The precision of the metadata calculated is very hard to access since there is no ground truth available. The version metadata calculated is being calculated for the first time. To evaluate the precision of the metadata calculation we will analyze a small subset of the Test262 tests manually, comparing the version calculated with their real version. We will use two separate strategies for selecting tests for manual inspection: 
+The precision of the metadata calculated is very hard to access since there is no ground truth available. The version metadata calculated is being calculated for the first time. To evaluate the precision of the metadata calculation we will analyze a small subset of the Test262 tests manually, comparing the version calculated with their real version. We will use two separate strategies for selecting tests for manual inspection:
 \begin{itemize}
-\item \emph{Random Strategy:} we will select a small subset of tests randomly, guaranteeing uniform coverage of the various test folders; 
+\item \emph{Random Strategy:} we will select a small subset of tests randomly, guaranteeing uniform coverage of the various test folders;
 %
 \item \emph{Heuristic Selection:} we will select the tests that exhibit the largest different between the computed version and the version that was the latest at the time the test was added to \texttt{Test262}. To do this, we will extend the metadata of the tests with the date in which they were added to Test262 or updated. It is often the case that tests are added for features of previous versions; this happens for instance when Test262 maintainers detect missing coverage issues, in such cases the newly added tests target the version that was active when the corresponding uncovered feature was introduced instead of the current one.
 \end{itemize}
@@ -680,11 +680,11 @@ The MetaData262Viz evaluation will have three types of tests: unit tests, end-to
 \label{sub:planning}
 
 % subsection planning (end)
-% Planning -> usar texto equivalente ao Miguel Trigo 
+% Planning -> usar texto equivalente ao Miguel Trigo
 % - Melhoria do sistema de calculo da metadata - 2 meses
 % - Conclusão do sistema de visualização - 2 meses
-% - Avaliação - 1 mês 
-% - Thesis Writing - 2 meses 
+% - Avaliação - 1 mês
+% - Thesis Writing - 2 meses
 % Julho - (Agosto férias) - Novembro
 
 The Plan for this thesis is based on the tasks that need to be performed in order to accomplish the objectives defined in Section \ref{sec:Goals}. Thus, this thesis has 4 main task to accomplish: improving the metadata calculation, concluding the MetaData262Viz, evaluating the results, and writing the thesis. These tasks are represented in the Gantt diagram in Figure \ref{fig:gantt} and each task is described in more detail afterwards. Note that the month of August has a grey background due to it being a vacations period.
@@ -721,6 +721,7 @@ This last task will consist of reporting the execution of the previous tasks, by
 \label{sec:Conclusion}
 With this thesis we will build an infrastructure that enables convenient access to the metadata of the \texttt{Test262} test suite. We will improve the metadata calculation of \texttt{MetaData262 v0} and make it accessible to users via a web interface. This will enable \texttt{JavaScript} engine developers to filter tests easily, in particular developers of partial implementations. This will allow developers to find and correct errors more quickly and also enable a standardization of test selection process for partial implementations.
 
+ola eu quero testar isto!
 
 
 %
